@@ -2,8 +2,9 @@
 
 from django.shortcuts import render
 from datetime import datetime
-from voucherMe.models import Post
+from voucherMe.models import UserProfile, Business, Post
 
+#pageviews
 def index(request):
     post_list = Post.objects.order_by('-votes')[:10]
     context_dict = {}
@@ -16,6 +17,19 @@ def about(request):
     context_dict = {}
     context_dict['visits'] = request.session['visits']
     return render(request, 'voucher/about.html', context=context_dict)
+
+def show_business(request, business_name_slug):
+    context_dict = {}
+    try:
+        business = Business.objects.get(name=business_name_slug)
+        posts = Post.objects.filter(business_id=business)
+        context_dict['business'] = business
+        context_dict['posts'] = [posts]
+    except Business.DoesNotExist:
+        context_dict['name'] = None
+        context_dict['posts'] = None
+    return render(request, 'business.html', context=context_dict)
+
 
 #cookie handler
 def get_server_side_cookie(request, cookie, default_val=None):
