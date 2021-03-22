@@ -4,6 +4,29 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
+TAGS_CATEGORY = (
+    ("1", "FOOD"),
+    ("2", "TRAVEL"),
+    ("3", "FASHION"),
+    ("4", "TECHNOLOGY"),
+    ("5", "BOOKS"),
+    ("6", "MUSIC"),
+    ("7", "FURNITURE"),
+    ("8", "STATIONARY & ART"),
+    ("9", "SKINCARE & BEAUTY"),
+)
+TAGS_TYPE = (
+    ("1", "FLASH SALE/DISCOUNT"),
+    ("2", "BUY MORE, SAVE MORE"),
+    ("3", "LOTTERY/COMPETITION"),
+    ("4", "GIFT BUNDLE/GIVEAWAY"),
+    ("5", "BUY 1 GET 1 FREE"),
+    ("6", "LOYALTY PROGRAM"),
+    ("7", "VOUCHER/COUPON"),
+    ("8", "FREE SHIPPING/RETURN"),
+    ("9", "OTHER"),
+)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     owner = models.BooleanField(default=False)
@@ -30,8 +53,10 @@ class Business(models.Model):
 
 class Post(models.Model):
     business_id = models.ForeignKey(Business, on_delete=models.CASCADE, default=0)
-    name = models.CharField(max_length=32, unique=True)
-    description = models.CharField(max_length=1024, unique=False)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=1024)
+    tags_category = models.CharField(max_length=32, choices=TAGS_CATEGORY,default=1)
+    tags_type = models.CharField(max_length=32, choices=TAGS_TYPE, default=1)
     votes = models.IntegerField(default=0)
 
     class Meta:

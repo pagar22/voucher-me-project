@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-
+{% if business %}
+<h1>{{ business.name }}</h1>
+    {% if posts %}
+        {% for post in posts %}
+            <h1>{{ post.name }}</h1>
+        {% endfor %}
+    {% else %}
+        <h1>NO POSTS :(</h1>
+    {% endif %}
+{% else %}
+<h1>Specified Business Does Not Exist</h1>
+{% endif %}
 </body>
 </html>
