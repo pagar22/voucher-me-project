@@ -1,18 +1,23 @@
 {% extends "voucher/base.html" %}
 {% load static %}
 
-{% block title %}About VoucherMe!{% endblock %}
+{% block title_block %}Home!{% endblock %}
 {% block body_block %}
-	<h1>Welcome to our homepage</h1>
-	
-	This is our home page.<br/>
-	<br>
-	<br>
+	<div class="jumbotron p-1">
+      <div class="container">
+          <h3 class="jumbotron-heading" align="center">Welcome to VoucherMe</h3>
+      </div>
+    </div>
 	<div>
-	<center>
-	<h2>Most viewed posts</h2>
+    {% if posts %}
+        <h2 align="center">Most viewed posts</h2>
+        <ul>
+        {% for post in posts %}
+            <li>{{ post.name }}, {{ post.get_tags_category_display }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no Posts on VoucherMe currently :(</strong>
+    {% endif %}
 	</div>
 	{% endblock %}
-
-	
-

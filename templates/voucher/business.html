@@ -1,6 +1,6 @@
 {% extends "voucher/base.html" %}
 {% load static %}
-    {% block title %}
+    {% block title_block %}
         {% if business %}
             {{ business.name }}
         {% else %}
@@ -10,13 +10,16 @@
 
     {% block body_block %}
         {% if business %}
-        <ul>
-            {% for post in posts %}
-            {{ post.name }}
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No posts from this business yet</strong>
-    {% endif %}
+            {% if posts %}
+                <h2 align="center">Posts by {{ business.name }}</h2>
+                <ul>
+                    {% for post in posts %}
+                        <li>{{ post.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no posts from this business yet :(</strong>
+            {% endif %}
+        {% endif %}
         <br><br>
     {% endblock %}

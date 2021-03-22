@@ -1,0 +1,22 @@
+{% extends "voucher/base.html" %}
+{% load static %}
+    {% block title %}
+        {% if business %}
+            {{ business.name }}
+        {% else %}
+            Unknown Business :(
+        {% endif %}
+    {% endblock %}
+
+    {% block body_block %}
+        {% if business %}
+        <ul>
+            {% for post in posts %}
+            {{ post.name }}
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No posts from this business yet</strong>
+    {% endif %}
+        <br><br>
+    {% endblock %}
