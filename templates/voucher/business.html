@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "voucher/base.html" %}
+{% load static %}
+	{% block title %}
+		{% if business %}
+			{{ business.name }}
+		{% else %}
+			Unknown Category
+		{% endif %}
+	{% endblock %}
+	
+	{% block body_block %}
+		{% if business %}
+		<ul>
+			{% for post in posts %}
+			<li><a href="{{ page.url }}">{{ post.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<strong>No posts from this business yet</strong>
+	{% endif %}
+		<br><br>
+	{% endblock %}
