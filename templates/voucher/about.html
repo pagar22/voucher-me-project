@@ -1,6 +1,12 @@
-<!-- HARVEY -->
+{% extends "voucher/base.html" %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-</html>
+{% block title %}About VoucherMe!{% endblock %}
+{% block body_block %}
+	<h1>About us</h1>
+	
+	This is our about page.<br/>
+	<img src="{% static 'voucher.jpg' %}" alt="Picture of a voucher" />
+	<br>
+	<br>
+	{% endblock %}
