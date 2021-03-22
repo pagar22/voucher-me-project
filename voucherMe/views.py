@@ -7,17 +7,14 @@ from voucherMe.models import UserProfile, Business, Post
 
 # pageviews
 def index(request):
-    post_list = Post.objects.order_by('-votes')[:10]
+    post_list = Post.objects.order_by('-visits')[:10]
     context_dict = {}
     context_dict['posts'] = post_list
-    vistor_cookie_handler(request)
     return render(request, 'voucher/index.html', context=context_dict)
 
 
 def about(request):
-    vistor_cookie_handler(request)
     context_dict = {}
-    context_dict['visits'] = request.session['visits']
     return render(request, 'voucher/about.html', context=context_dict)
 
 
@@ -40,8 +37,11 @@ def show_post(request, business_name_slug, post_id):
     try:
         business = Business.objects.get(slug=business_name_slug)
         post = Post.objects.get(id=post_id)
+        vistor_cookie_handler(request)
+        post.visits = request.session['visits']
         context_dict['business'] = business
         context_dict['post'] = post
+        context_dict['visits'] = post.visits
     except Post.DoesNotExist:
         context_dict['business'] = None
         context_dict['post'] = None

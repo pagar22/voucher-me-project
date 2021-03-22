@@ -57,7 +57,7 @@ class Post(models.Model):
     description = models.CharField(max_length=1024)
     tags_category = models.CharField(max_length=32, choices=TAGS_CATEGORY,default=1)
     tags_type = models.CharField(max_length=32, choices=TAGS_TYPE, default=1)
-    votes = models.IntegerField(default=0)
+    visits = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = 'Posts'
