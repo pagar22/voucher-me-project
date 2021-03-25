@@ -1,15 +1,19 @@
 # AARYAN
-
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 from datetime import datetime
+
+from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
 
 
 # pageviews
 def index(request):
     post_list = Post.objects.order_by('-visits')[:10]
+    business_list = Business.objects.order_by('-likes')[:10]
     context_dict = {}
     context_dict['posts'] = post_list
+    context_dict['businesses'] = business_list
     return render(request, 'voucher/index.html', context=context_dict)
 
 
@@ -18,6 +22,30 @@ def about(request):
     return render(request, 'voucher/about.html', context=context_dict)
 
 
+# Add
+def add_business(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        user = None
+    if user is None:
+        return redirect('voucherMe:index')
+
+    form = BusinessForm()
+    if request.method == 'POST':
+        form = BusinessForm(request.POST)
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.user_id = user
+            business.save()
+            return redirect('voucherMe:index')
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'user': user}
+    return render(request, 'voucher/add_business.html', context_dict)
+
+
+# show
 def show_business(request, business_name_slug):
     context_dict = {}
     try:
@@ -31,7 +59,6 @@ def show_business(request, business_name_slug):
     return render(request, 'voucher/business.html', context=context_dict)
 
 
-# how to uniquely identify post
 def show_post(request, business_name_slug, post_id):
     context_dict = {}
     try:

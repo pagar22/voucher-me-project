@@ -13,7 +13,7 @@
         <h2 align="center">Most viewed posts</h2>
         <ul>
         {% for post in posts %}
-            <li>{{ post.name }}, {{ post.get_tags_category_display }}</li>
+            <li><a href="{% url 'voucherMe:show_post' post.business_id.slug post.id %}">{{ post.name }}</a></li>
         {% endfor %}
         </ul>
     {% else %}

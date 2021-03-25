@@ -36,9 +36,10 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Business(models.Model):
-    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=1024, unique=False)
+    likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
 
     class Meta:
@@ -55,6 +56,7 @@ class Post(models.Model):
     business_id = models.ForeignKey(Business, on_delete=models.CASCADE, default=0)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=1024)
+    promo = models.CharField(max_length=50, blank=True)
     tags_category = models.CharField(max_length=32, choices=TAGS_CATEGORY,default=1)
     tags_type = models.CharField(max_length=32, choices=TAGS_TYPE, default=1)
     visits = models.IntegerField(default=0)
@@ -64,3 +66,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        for field_name in ['promo']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+        super(Post, self).save(*args, **kwargs)
