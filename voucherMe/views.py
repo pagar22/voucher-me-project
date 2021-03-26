@@ -93,6 +93,7 @@ def show_post(request, business_name_slug, post_id):
         context_dict['business'] = business
         context_dict['post'] = post
         context_dict['visits'] = post.visits
+        context_dict['promo'] = post.promo
     except Post.DoesNotExist:
         context_dict['business'] = None
         context_dict['post'] = None

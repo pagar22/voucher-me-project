@@ -20,14 +20,14 @@
 		
 		
 </script>
-            {% if posts %}
+            {% if post %}
                 <h2 align="center">Posts by {{ business.name }}</h2>
                 <ul>
                     
                         <li>{{ post.name }}</li>
 						<li>{{ post.description }}</li>
-						{% if post.code %}
-						<li><output type="text" value= "{{ post.code }}" id="CopyCode">
+						{% if post.promo %}
+						<li><output type="text" value= {{ post.promo }} id="CopyCode">
 						<button onclick="copyText()">Copy the voucher code!</button></li>
 						{% endif %}
                 </ul>
