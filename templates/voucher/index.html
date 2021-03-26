@@ -10,7 +10,7 @@
     </div>
 	<div>
     {% if posts %}
-        <h2 align="center">Most viewed posts</h2>
+        <h3 align="center">Most viewed posts</h3>
         <ul>
         {% for post in posts %}
             <li><a href="{% url 'voucherMe:show_post' post.business_id.slug post.id %}">{{ post.name }}</a></li>
@@ -20,4 +20,21 @@
         <strong>There are no Posts on VoucherMe currently :(</strong>
     {% endif %}
 	</div>
-	{% endblock %}
+    <div>
+    {% if businesses %}
+        <h3 align="center">Most liked Businesses</h3>
+        <ul>
+            {% for business in businesses %}
+                <li>
+                <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                {% if business.image %}
+                    <img src="{{ business.image.url}}" alt="no_business_image" height="40dp" width="40dp"/>
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no businesses register on VoucherMe yet :(</strong>
+    {% endif %}
+    </div>
+{% endblock %}

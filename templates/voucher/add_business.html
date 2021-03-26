@@ -3,10 +3,12 @@
 		Create business!
  {% endblock %}
 {% block body_block %}
+    <div class="jumbotron p-1">
     <h3 align="center">Create a new Business now!</h3>
+    </div>
     <div class="container">
         <div class="row">
-            <form role="form" method="post" action="{% url 'voucherMe:add_business' user.username %}">
+            <form role="form" method="post" action="{% url 'voucherMe:add_business' user.username %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for hidden in form.hidden_fields %}
                     {{ hidden }}

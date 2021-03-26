@@ -37,12 +37,36 @@ def add_business(request, username):
         if form.is_valid():
             business = form.save(commit=False)
             business.user_id = user
+            if 'image' in request.FILES:
+                business.image = request.FILES['image']
             business.save()
             return redirect('voucherMe:index')
         else:
             print(form.errors)
     context_dict = {'form': form, 'user': user}
     return render(request, 'voucher/add_business.html', context_dict)
+
+#how to get user object and assign value (not null), don't want to reassign new
+def add_post(request, username, business_name_slug):
+    try:
+        business = Business.objects.get(slug=business_name_slug)
+    except Business.DoesNotExist:
+        business = None
+    if business is None:
+        return redirect('voucherMe:index')
+    user = business.user_id
+    form = PostForm()
+    if request.method == 'POST':
+        form = BusinessForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.business_id = business
+            post.save()
+            return redirect('voucherMe:index')
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'business': business}
+    return render(request, 'voucher/add_post.html', context_dict)
 
 
 # show

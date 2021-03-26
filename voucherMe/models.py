@@ -39,6 +39,7 @@ class Business(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=1024, unique=False)
+    image = models.ImageField(upload_to='business_images', blank=True)
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
 
@@ -57,7 +58,7 @@ class Post(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=1024)
     promo = models.CharField(max_length=50, blank=True)
-    tags_category = models.CharField(max_length=32, choices=TAGS_CATEGORY,default=1)
+    tags_category = models.CharField(max_length=32, choices=TAGS_CATEGORY, default=1)
     tags_type = models.CharField(max_length=32, choices=TAGS_TYPE, default=1)
     visits = models.IntegerField(default=0)
 
