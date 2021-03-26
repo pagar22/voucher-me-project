@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'voucherMe',
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 091b9ab1a8606fc7fad48146defc55d0533c97dc
 ]
 
 MIDDLEWARE = [
