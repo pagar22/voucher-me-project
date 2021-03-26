@@ -71,5 +71,10 @@
             <a href="{% url 'voucherMe:add_business' user.username %}">Add one now!</a>
         {% endif %}
     </div>
+    <div id="second">
+    <a href="{% url 'auth_logout' %}">
+        <button class="btn btn-primary">Logout</button>
+    </a>
+    </div>
 </div>
 {% endblock %}
