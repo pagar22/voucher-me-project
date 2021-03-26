@@ -25,10 +25,10 @@
         <h3 align="center">Most liked Businesses</h3>
         <ul>
             {% for business in businesses %}
-                <li>
-                <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                
+                <li><a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a></li>
                 {% if business.image %}
-                    <img src="{{ business.image.url}}" alt="no_business_image" height="40dp" width="40dp"/>
+                    <li><img src="{{ business.image.url}}" alt="no_business_image" height="40dp" width="40dp"/></li>
                 {% endif %}
                 </li>
             {% endfor %}
