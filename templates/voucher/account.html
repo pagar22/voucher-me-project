@@ -8,8 +8,8 @@
 		{% endif %}
     {% endblock %}
 
-    {% block body_block %}
-        <style>
+{% block body_block %}
+    <style>
 #round {
   border-radius: 50%;
     border: 1px solid #514069;
@@ -24,45 +24,52 @@
 #first {
     width: 300px;
     float:left; /* add this */
-    border: 1px solid #e5dfea;
 }
 #second {
-    border: 1px solid #e5dfea;
+    float:left;
     overflow: hidden; /* if you don't want #second to wrap below #first */
 }
+    </style>
 
-</style>
-        {% if user.is_authenticated %}
-            <div class="jumbotron p-1">
-            <div class="container">
-                <h2 class="jumbotron-heading" align="center">Hello, {{ user.username }}.</h2>
-            </div>
-            </div>
-            {% if userprofile.picture %}
-                    <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 200px">
-            {% else %}
-                <img id="round" src="{% static 'images/profile.png' %}" alt="profile_picture" style="width: 200px">
-            {% endif %}
-            <br>
-            <h6 class="font">{{ user.username }}</h6>
-        {% else %}
-            No account registered :( Retry!
-            <a href="{% url 'VoucherMe:index' %}">Back to Homepage</a></li>
-        {% endif %}
-        <br><br>
+{% if user.is_authenticated %}
+    <div class="jumbotron p-1">
+        <div class="container">
+            <h2 class="jumbotron-heading" align="center">Hello, {{ user.username }}.</h2>
+        </div>
+    </div>
+
+    <div id="wrapper">
+    <div id = first>
+    {% if userprofile.picture %}
+        <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 200px">
+    {% else %}
+        <img id="round" src="{% static 'images/profile.png' %}" alt="profile_picture" style="width: 200px">
+    {% endif %}
+    <br>
+    <h6 class="font">{{ user.username }}</h6>
+{% else %}
+    No account registered :( Retry!
+    <a href="{% url 'VoucherMe:index' %}">Back to Homepage</a></li>
+{% endif %}
+    <br><br>
+    </div>
+
+    <div id="second">
         {% if businesses %}
-        <p>Here are the businesses you own!</p>
-        <ul>
-        {% for business in businesses %}
-        <li><a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a></li>
-        {% endfor %}
-        </ul>
+            <p>Here are the businesses you own!</p>
+            <ul>
+                {% for business in businesses %}
+                    <li><a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a></li>
+                {% endfor %}
+            </ul>
             <a href="{% url 'voucherMe:add_business' user.username %}">
-            <button class="btn btn-primary">Add another business!</button>
+                <button class="btn btn-primary">Add another business!</button>
             </a>
         {% else %}
-        <p>You don't own any businesses yet :( </p>
-        <br>
-        <a href="{% url 'voucherMe:add_business' user.username %}">Add one now!</a>
+            <p>You don't own any businesses yet :( </p>
+            <br>
+            <a href="{% url 'voucherMe:add_business' user.username %}">Add one now!</a>
         {% endif %}
-    {% endblock %}
+    </div>
+</div>
+{% endblock %}
