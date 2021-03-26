@@ -21,6 +21,14 @@ def about(request):
     context_dict = {}
     return render(request, 'voucher/about.html', context=context_dict)
 
+def account(request, username):
+    pass
+
+def login(request):
+    pass
+
+def register(request):
+    pass
 
 # Add
 def add_business(request, username):
@@ -119,9 +127,7 @@ def vistor_cookie_handler(request):
     request.session['visits'] = visits
 
 
-@login_required
-    def user_logout(request):
-
-    logout(request)
-
-    return redirect(reverse('voucherMe:index'))
+#@login_required
+#def user_logout(request):
+#    logout(request)
+#    return redirect()
