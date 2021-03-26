@@ -30,11 +30,13 @@
                 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
-                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'VoucherMe:index' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'VoucherMe:about' %}">About us</a></li>
                         {% if user.is_authenticated %}
-                        
+							<li class="nav-item"><a class="nav-link" href="{% url 'VoucherMe:Account' %}">Your Account</a></li>
                         {% else %}
-                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'VoucherMe:login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'VoucherMe:register' %}">Register</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -46,7 +48,8 @@
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                        
+                        <img src="{% static 'images/Logo.jpg' %}"
+							alt="Our Amazing Logo" /> 
                     {% endblock %}
                     </div>
                 </nav>
