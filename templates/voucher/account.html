@@ -1,0 +1,23 @@
+{% extends "voucher/base.html" %}
+{% load static %}
+    {% block title_block %}
+        {% if user.is_authenticated %}
+		{{ You are authenticated }}
+		{% endif %}
+    {% endblock %}
+
+    {% block body_block %}
+        {% if user.is_authenticated %}
+            
+                <h2 align="center">Your account</h2>
+                <ul>
+                    <li></li>
+                    {{ account.name }}
+                    <li><a href="{% url 'voucherMe:logout' %}">Logout</a></li>
+                </ul>
+            {% else %}
+			{{ you are not authenticated }}
+			<a href="{% url 'VoucherMe:index' %}">Back to HomePage</a></li>
+        {% endif %}
+        <br><br>
+    {% endblock %}

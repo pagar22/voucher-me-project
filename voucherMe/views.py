@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from datetime import datetime
-
+from django.contrib.auth import logout
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
 
@@ -93,3 +93,11 @@ def vistor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
+
+@login_required
+    def user_logout(request):
+
+    logout(request)
+
+    return redirect(reverse('voucherMe:index'))
