@@ -33,10 +33,10 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:index' %}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:about' %}">About us</a></li>
                         {% if user.is_authenticated %}
-							<li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:account' user.username %}">Your Account</a></li>
+							<li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:profile' user.username %}">Your Profile</a></li>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:login' %}">Login</a></li>
-						<li class="nav-item"><a class="nav-link" href="{% url 'voucherMe:register' %}">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Sign Up</a></li>
                         {% endif %}
                     </ul>
                 </div>

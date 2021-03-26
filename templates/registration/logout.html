@@ -1,0 +1,14 @@
+{% extends 'voucher/base.html' %}
+{% block title_block %}
+    Logged Out
+{% endblock %}
+
+{% block body_block %}
+    <h1>Logged Out</h1>
+    <br>
+    <p>
+        Log out successful. We're sad to see you go :(
+    </p>
+    <br>
+    <a href="{% url 'voucherMe:index' %}">Back to Homepage</a>
+{% endblock %}

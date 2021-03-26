@@ -1,8 +1,9 @@
 # AARYAN
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from datetime import datetime
-from django.contrib.auth import logout
+from django.contrib.auth import login
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
 
@@ -21,16 +22,16 @@ def about(request):
     context_dict = {}
     return render(request, 'voucher/about.html', context=context_dict)
 
-def account(request, username):
-    pass
-
-def login(request):
-    pass
-
-def register(request):
-    pass
+@login_required
+def profile(request, username):
+    user = request.user
+    userprofile = UserProfile.objects.get(user=user)
+    businesses = Business.objects.filter(user_id=user).order_by('-likes')
+    context_dict = {'user': user, 'userprofile': userprofile, 'businesses': businesses}
+    return render(request, 'voucher/account.html', context=context_dict)
 
 # Add
+@login_required
 def add_business(request, username):
     try:
         user = User.objects.get(username=username)
@@ -55,6 +56,7 @@ def add_business(request, username):
     return render(request, 'voucher/add_business.html', context_dict)
 
 #how to get user object and assign value (not null), don't want to reassign new
+@login_required
 def add_post(request, username, business_name_slug):
     try:
         business = Business.objects.get(slug=business_name_slug)
@@ -82,12 +84,15 @@ def show_business(request, business_name_slug):
     context_dict = {}
     try:
         business = Business.objects.get(slug=business_name_slug)
-        posts = Post.objects.filter(business_id=business)
+        posts = Post.objects.filter(business_id=business).order_by('-visits')
+        user = request.user
         context_dict['business'] = business
         context_dict['posts'] = posts
+        context_dict['user'] = user
     except Business.DoesNotExist:
         context_dict['business'] = None
         context_dict['posts'] = None
+        context_dict['user'] = None
     return render(request, 'voucher/business.html', context=context_dict)
 
 
@@ -127,8 +132,3 @@ def vistor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
 
-
-#@login_required
-#def user_logout(request):
-#    logout(request)
-#    return redirect()

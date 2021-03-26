@@ -10,16 +10,27 @@
 
     {% block body_block %}
         {% if business %}
+                <div class="jumbotron p-1">
+                    <div class="container">
+                        <h2 align="center">Welcome to {{ business.name }}</h2>
+                    </div>
+                </div>
             {% if posts %}
-                <h2 align="center">Posts by {{ business.name }}</h2>
+                <h4>Posts</h4>
                 <ul>
                     {% for post in posts %}
                         <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <strong>There are no posts from this business yet :(</strong>
+                <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}
+            <br><br>
+            {% ifequal user business.user_id %}
+                <a href="{% url 'voucherMe:add_post' user.username business.slug %}">
+                    <button class="btn btn-primary">Add a new post now!</button>
+                </a>
+            {% endifequal %}
         {% endif %}
         <br><br>
     {% endblock %}

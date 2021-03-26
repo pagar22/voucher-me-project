@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'voucherMe',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,10 @@ MIDDLEWARE = [
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 ROOT_URLCONF = 'voucher_me_project.urls'
+REGISTRATION_OPEN = True
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = 'voucherMe:index'
+LOGIN_URL = 'auth_login'
 
 TEMPLATES = [
     {

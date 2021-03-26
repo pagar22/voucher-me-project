@@ -1,0 +1,32 @@
+{% extends 'voucher/base.html' %}
+{% block title_block %}
+  Login
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron p-4">
+  <div class="container">
+    <h1 class="jumbotron-heading">Login</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <form class="form-signin" role="form" method="post" action="." >
+      {% csrf_token %}
+      <label for="id_username" class="sr-only">Username</label>
+      <input type="text" name="username" id="id_username" class="form-control"
+             placeholder="Username" required autofocus style="margin-bottom: 6px">
+      <label for="id_password" class="sr-only">Password</label>
+      <input type="password" name="password" id="id_password" class="form-control"
+             placeholder="Password" required>
+      <div class="p-1"></div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" style="margin-bottom: 10px">
+        Sign in
+      </button>
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
