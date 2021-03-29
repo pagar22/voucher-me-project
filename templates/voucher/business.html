@@ -26,8 +26,8 @@
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}
             <br><br>
-            {% ifequal user business.user_id %}
-                <a href="{% url 'voucherMe:add_post' user.username business.slug %}">
+            {% ifequal user business.user %}
+                <a href="{% url 'voucherMe:add_post' business.slug %}">
                     <button class="btn btn-primary">Add a new post now!</button>
                 </a>
             {% endifequal %}

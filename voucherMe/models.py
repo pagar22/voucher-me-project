@@ -35,7 +35,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Business(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=1024, unique=False)
     image = models.ImageField(upload_to='business_images', blank=True)
@@ -53,7 +53,7 @@ class Business(models.Model):
         return self.name
 
 class Post(models.Model):
-    business_id = models.ForeignKey(Business, on_delete=models.CASCADE, default=0)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, default=0)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=1024)
     promo = models.CharField(max_length=50, blank=True)

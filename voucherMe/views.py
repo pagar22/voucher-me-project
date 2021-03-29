@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from datetime import datetime
+from django.urls import reverse
 from django.contrib.auth import login
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
@@ -22,6 +23,7 @@ def about(request):
     context_dict = {}
     return render(request, 'voucher/about.html', context=context_dict)
 
+
 @login_required
 def profile(request, username):
     user = request.user
@@ -29,6 +31,7 @@ def profile(request, username):
     businesses = Business.objects.filter(user_id=user).order_by('-likes')
     context_dict = {'user': user, 'userprofile': userprofile, 'businesses': businesses}
     return render(request, 'voucher/account.html', context=context_dict)
+
 
 # Add
 @login_required
@@ -45,7 +48,7 @@ def add_business(request, username):
         form = BusinessForm(request.POST)
         if form.is_valid():
             business = form.save(commit=False)
-            business.user_id = user
+            business.user = user
             if 'image' in request.FILES:
                 business.image = request.FILES['image']
             business.save()
@@ -55,27 +58,31 @@ def add_business(request, username):
     context_dict = {'form': form, 'user': user}
     return render(request, 'voucher/add_business.html', context_dict)
 
-#how to get user object and assign value (not null), don't want to reassign new
+
+# how to get user object and assign value (not null), don't want to reassign new
 @login_required
-def add_post(request, username, business_name_slug):
+def add_post(request, business_name_slug):
     try:
         business = Business.objects.get(slug=business_name_slug)
     except Business.DoesNotExist:
         business = None
     if business is None:
         return redirect('voucherMe:index')
-    user = business.user_id
+    user = request.user
     form = PostForm()
     if request.method == 'POST':
-        form = BusinessForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.business_id = business
-            post.save()
-            return redirect('voucherMe:index')
+            if business:
+                post = form.save(commit=False)
+                post.business = business
+                post.visits = 0
+                post.save()
+                return redirect(reverse('voucherMe:show_business',
+                                        kwargs={'business_name_slug': business_name_slug}))
         else:
             print(form.errors)
-    context_dict = {'form': form, 'business': business}
+    context_dict = {'form': form, 'business': business, 'user': user, }
     return render(request, 'voucher/add_post.html', context_dict)
 
 
@@ -131,4 +138,3 @@ def vistor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
-

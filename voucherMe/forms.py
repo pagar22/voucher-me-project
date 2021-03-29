@@ -49,18 +49,18 @@ class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
         fields = ('name', 'description')
-        exclude = ('user_id',)
+        exclude = ('user',)
 
 class PostForm(forms.ModelForm):
     name = forms.CharField(max_length=50, help_text="Your post's name goes here.")
     description = forms.CharField(widget=forms.Textarea, max_length=1024,
                                   help_text="What is this post about?")
-    promo = forms.CharField(help_text="Add a promo code (if you want!)", required=False)
+    promo = forms.CharField(max_length=50, help_text="Add a promo code (if you want!)", required=False)
     tags_category = forms.ChoiceField(help_text="Add a category tag", choices=TAGS_CATEGORY)
     tags_type = forms.ChoiceField(help_text="Add a type tag", choices=TAGS_TYPE)
-    visits = forms.CharField(widget=forms.HiddenInput)
+    visits = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
     class Meta:
         model = Post
         fields = ('name', 'description', 'promo', 'tags_category', 'tags_type',)
-        exclude = ('business_id',)
+        exclude = ('business', 'visits',)
