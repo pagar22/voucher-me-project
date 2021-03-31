@@ -43,7 +43,7 @@ header, nav, footer, section, article, aside{
 				<section id="services">
 				<ul>
 					<li><strong><center> Post Title </strong> </li> <pre class="tab"> </pre>
-					<li><strong><center> Post Likes </strong></li> <pre class="tab"> </pre>
+					<li><strong><center> Post visits </strong></li> <pre class="tab"> </pre>
 					<li><strong><center> Tags </strong></li> <pre class="tab"> </pre>
 					<li><strong><center> Promo Code </strong></li>
 					<br>
@@ -69,6 +69,19 @@ header, nav, footer, section, article, aside{
 					</section>
                 </ul>
 				
+				{% if user.is_authenticated %}
+					<form action="{% url 'blogpost_like' object.id %}" method="POST">
+					{% csrf_token %}
+					
+					{% if post_is_liked %}
+						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+					{% else %}
+						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Like</button>
+					{% endif %}
+					</form>
+				{% else %}
+					<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+				{% endif %}
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}

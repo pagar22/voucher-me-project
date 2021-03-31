@@ -19,7 +19,7 @@
 		}
         </script>
             {% if post %}
-			<section id = "myList">
+			
                 <h2 align="center">"{{ post.name }}" by {{ business.name }}</h2>
                 <ul>
                     <li>{{ post.name }}</li>
@@ -29,7 +29,11 @@
                             <button onclick="copyText()">Copy the voucher code!</button></li>
                     {% endif %}
                 </ul>
-			</section>
+				
+			
+			
+			
+			
             {% else %}
                 <strong>There are no posts from this business yet :(</strong>
             {% endif %}
