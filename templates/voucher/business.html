@@ -17,11 +17,18 @@
                 </div>
             {% if posts %}
                 <h4>Posts</h4>
+				<section id="myList">
                 <ul>
                     {% for post in posts %}
                         <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
+						<ul>
+							<li> { { post.visits } }</li>
+							{% if post.promo %}
+								<li> { { post.promo } } </li>
+								{% endif %}
                     {% endfor %}
                 </ul>
+				</section>
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}

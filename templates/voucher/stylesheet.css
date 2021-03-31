@@ -104,3 +104,12 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 13, 13, .25);
 }
+/*
+better list 
+*/
+#myList li{
+    display: table-cell;
+    width: 125px;
+    height: 125px;
+    border: 1px solid #000;   
+}

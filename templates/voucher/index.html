@@ -25,12 +25,15 @@
         <h3 align="center">Most liked Businesses</h3>
         <ul>
             {% for business in businesses %}
+			<section id="myList">
                 <li><a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a></li>
+				
+				<ul>
                 {% if business.image %}
-                    <ul>
-                    <li><img src="{{ business.image.url}}" alt="no_business_image" height="40dp" width="40dp"/></li>
-                    </ul>
+                    <li><img src="{{ business.image.url}}" alt="Businesses chosen image" height="40dp" width="40dp"/></li>
                 {% endif %}
+				</ul>
+				</section>
             {% endfor %}
         </ul>
     {% else %}

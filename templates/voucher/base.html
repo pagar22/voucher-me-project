@@ -46,12 +46,13 @@
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				
                     <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                        <img src="{% static 'images/Logo.jpg' %}"
-							alt="Our Amazing Logo" /> 
+                        <img src="{% static 'images/Logo.jpg' %} "alt="Our Amazing Logo" style="width:130px;height:100px;/> 
                     {% endblock %}
                     </div>
+					
                 </nav>
                 
                 <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		
