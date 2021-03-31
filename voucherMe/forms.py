@@ -25,15 +25,16 @@ TAGS_TYPE = (
     ("9", "OTHER"),
 )
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email', 'password',)
+        fields = ('username', 'email', 'password',)
+
 
 class UserProfileForm(forms.ModelForm):
-    owner = forms.BooleanField(widget=forms.HiddenInput)
     class Meta:
         model = UserProfile
         fields = ('picture',)
@@ -50,6 +51,7 @@ class BusinessForm(forms.ModelForm):
         model = Business
         fields = ('name', 'description')
         exclude = ('user',)
+
 
 class PostForm(forms.ModelForm):
     name = forms.CharField(max_length=50, help_text="Your post's name goes here.")

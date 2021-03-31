@@ -39,11 +39,14 @@ class Business(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=1024, unique=False)
     image = models.ImageField(upload_to='business_images', blank=True)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name="business_likes", default=0)
     slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name_plural = 'Businesses'
+
+    def number_of_likes(self):
+        return self.likes.count()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
