@@ -27,6 +27,7 @@ def about(request):
 @login_required
 def profile(request, username):
     user = request.user
+    print(user)
     userprofile = UserProfile.objects.get(user=user)
     businesses = Business.objects.filter(user_id=user).order_by('-likes')
     context_dict = {'user': user, 'userprofile': userprofile, 'businesses': businesses}

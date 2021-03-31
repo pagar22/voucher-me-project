@@ -30,6 +30,11 @@
     overflow: hidden; /* if you don't want #second to wrap below #first */
 }
     </style>
+    <script>
+    function alertFunction(){
+        alert("Do you really want to log out?");
+    }
+    </script>
 
 {% if user.is_authenticated %}
     <div class="jumbotron p-1">
@@ -68,12 +73,15 @@
         {% else %}
             <p>You don't own any businesses yet :( </p>
             <br>
-            <a href="{% url 'voucherMe:add_business' user.username %}">Add one now!</a>
+            <a href="{% url 'voucherMe:add_business' user.username %}">
+                <button class="btn btn-info">Add one now!</button>
+            </a>
         {% endif %}
     </div>
-    <div id="second">
+    <br/>
+    <div class="second">
     <a href="{% url 'auth_logout' %}">
-        <button class="btn btn-primary">Logout</button>
+        <button onclick="alertFunction()" class="btn btn-danger">Logout</button>
     </a>
     </div>
 </div>
