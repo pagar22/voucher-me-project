@@ -1,6 +1,6 @@
 {% extends "voucher/base.html" %}
 {% load static %}
-    {% block title %}
+    {% block title_block %}
         {% if business %}
             {{ business.name }}
         {% else %}
@@ -10,13 +10,102 @@
 
     {% block body_block %}
         {% if business %}
-        <ul>
-            {% for post in posts %}
-            {{ post.name }}
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No posts from this business yet</strong>
-    {% endif %}
+		<style>
+		html, body, address, blockquote, div,
+form, fieldset, caption,
+h1, h2, h3, h4, h5, h6,
+hr, ul, li, ol, ul, dl, dt, dd, br,
+table, tr, td, th, p, img{
+    margin: 0;
+    padding: 0;
+}
+
+header, nav, footer, section, article, aside{
+    display: block;
+}
+#services ul{
+  display:table;
+}
+#services li{
+    display: table-cell;
+    width: 250px;
+    height: 40px;
+    border: 0.5px solid;
+}
+</style>
+                <div class="jumbotron p-1">
+                    <div class="container">
+                        <h2 align="center">Welcome to {{ business.name }}</h2>
+                    </div>
+                </div>
+            {% if posts %}
+                <h4>Posts</h4>
+				<section id="services">
+				<ul>
+					<li><strong><center> Post Title </strong> </li> <pre class="tab"> </pre>
+					<li><strong><center> Post visits </strong></li> <pre class="tab"> </pre>
+					<li><strong><center> Tags </strong></li> <pre class="tab"> </pre>
+					<li><strong><center> Promo Code </strong></li>
+					<br>
+				</section>
+                <ul>
+				<br>
+				<section id="services">
+                    {% for post in posts %}
+					<ul>
+                        <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
+						<pre class="tab"> </pre>
+							<li> {{ post.visits }}</li>
+							<pre class="tab"> </pre>
+							<li>{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</li>
+							<pre class="tab"> </pre>
+							{% if post.promo %}
+								<li> {{ post.promo }} </li>
+								{% endif %}
+						</ul>
+						<h5></h5>
+						<br>
+                    {% endfor %}
+					</section>
+                </ul>
+				
+				{% if user.is_authenticated %}
+<<<<<<< HEAD
+                    <form action="{url 'voucherMe:business' business.likes %}" method="POST">
+                    {% csrf_token %}
+
+                    {% if post_is_liked %}
+                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
+                    {% else %}
+                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
+                    {% endif %}
+                    </form>
+                {% else %}
+                    <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                {% endif %}
+=======
+					<form action="{url 'voucherMe:business' business.likes %}" method="POST">
+					{% csrf_token %}
+					
+					{% if post_is_liked %}
+						<button type="submit" name="add like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
+					{% else %}
+						<button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
+					{% endif %}
+					</form>
+				{% else %}
+					<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+				{% endif %}
+>>>>>>> d0b978bed8ee51c610a0e1c990bbcff6c3e8a930
+            {% else %}
+                <strong>There are no posts from {{ business.name }} yet :(</strong>
+            {% endif %}
+            <br><br>
+            {% ifequal user business.user %}
+                <a href="{% url 'voucherMe:add_post' business.slug %}">
+                    <button class="btn btn-primary">Add a new post now!</button>
+                </a>
+            {% endifequal %}
+        {% endif %}
         <br><br>
     {% endblock %}
