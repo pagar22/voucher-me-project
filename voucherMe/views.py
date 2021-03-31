@@ -1,7 +1,7 @@
 # AARYAN
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime
 from django.urls import reverse
 from django.contrib.auth import login
@@ -87,20 +87,21 @@ def add_post(request, business_name_slug):
 
 
 # show
-def show_business(request, business_name_slug):
-    context_dict = {}
-    try:
-        business = Business.objects.get(slug=business_name_slug)
-        posts = Post.objects.filter(business_id=business).order_by('-visits')
-        user = request.user
-        context_dict['business'] = business
-        context_dict['posts'] = posts
-        context_dict['user'] = user
-    except Business.DoesNotExist:
-        context_dict['business'] = None
-        context_dict['posts'] = None
-        context_dict['user'] = None
-    return render(request, 'voucher/business.html', context=context_dict)
+class business():
+    def show_business(request, business_name_slug):
+        context_dict = {}
+        try:
+            business = Business.objects.get(slug=business_name_slug)
+            posts = Post.objects.filter(business_id=business).order_by('-visits')
+            user = request.user
+            context_dict['business'] = business
+            context_dict['posts'] = posts
+            context_dict['user'] = user
+        except Business.DoesNotExist:
+            context_dict['business'] = None
+            context_dict['posts'] = None
+            context_dict['user'] = None
+        return render(request, 'voucher/business.html', context=context_dict)
 
 
 def show_post(request, business_name_slug, post_id):
@@ -119,6 +120,14 @@ def show_post(request, business_name_slug, post_id):
         context_dict['post'] = None
     return render(request, 'voucher/post.html', context=context_dict)
 
+def BusinessLike(request, pk):
+    post = get_object_or_404(Business, id=request.POST.get('add_like'))
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
+    return redirect(reverse('voucher/business.html', args=[str(pk)]))
 
 # cookie handler
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -138,3 +147,4 @@ def vistor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+

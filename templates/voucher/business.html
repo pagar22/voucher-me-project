@@ -70,18 +70,18 @@ header, nav, footer, section, article, aside{
                 </ul>
 				
 				{% if user.is_authenticated %}
-					<form action="{% url 'blogpost_like' object.id %}" method="POST">
-					{% csrf_token %}
-					
-					{% if post_is_liked %}
-						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
-					{% else %}
-						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Like</button>
-					{% endif %}
-					</form>
-				{% else %}
-					<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
-				{% endif %}
+                    <form action="{url 'voucherMe:business' business.likes %}" method="POST">
+                    {% csrf_token %}
+
+                    {% if post_is_liked %}
+                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
+                    {% else %}
+                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
+                    {% endif %}
+                    </form>
+                {% else %}
+                    <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                {% endif %}
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}

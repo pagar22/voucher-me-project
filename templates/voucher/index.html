@@ -20,6 +20,13 @@ cards
 .container {
   padding: 2px 16px;
 }
+.bus-image{
+    width: 25%;
+    height: 100px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
 </style>
 	<div class="jumbotron p-1">
       <div class="container">
@@ -59,7 +66,9 @@ cards
 			<div class="card">
 			{% if business.image %}
 			<center>
-                   <img src="{{ business.image.url}}" alt="Businesses chosen image" style="width:25%"/>
+                <div class="bus-image">
+                    <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
+                </div>
                 {% endif %}
                 
 				<div class = "container">
