@@ -57,7 +57,7 @@ header, nav, footer, section, article, aside{
 						<pre class="tab"> </pre>
 							<li> {{ post.visits }}</li>
 							<pre class="tab"> </pre>
-							<li> {{ post.tags}}</li>
+							<li>{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</li>
 							<pre class="tab"> </pre>
 							{% if post.promo %}
 								<li> {{ post.promo }} </li>
@@ -70,13 +70,13 @@ header, nav, footer, section, article, aside{
                 </ul>
 				
 				{% if user.is_authenticated %}
-					<form action="{% url 'blogpost_like' object.id %}" method="POST">
+					<form action="{url 'voucherMe:business' business.likes %}" method="POST">
 					{% csrf_token %}
 					
 					{% if post_is_liked %}
-						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+						<button type="submit" name="add like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
 					{% else %}
-						<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Like</button>
+						<button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
 					{% endif %}
 					</form>
 				{% else %}
