@@ -87,32 +87,20 @@ def add_post(request, business_name_slug):
 
 
 # show
-class business():
-    def show_business(request, business_name_slug):
-        context_dict = {}
-        try:
-            business = Business.objects.get(slug=business_name_slug)
-            posts = Post.objects.filter(business_id=business).order_by('-visits')
-            user = request.user
-            context_dict['business'] = business
-            context_dict['posts'] = posts
-            context_dict['user'] = user
-        except Business.DoesNotExist:
-            context_dict['business'] = None
-            context_dict['posts'] = None
-            context_dict['user'] = None
-        return render(request, 'voucher/business.html', context=context_dict)
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-
-        likes_connected = get_object_or_404(Business, id=self.kwargs['pk'])
-        liked = False
-        if likes_connected.likes.filter(id=self.request.user.id).exists():
-            liked = True
-        data['number_of_likes'] = likes_connected.number_of_likes()
-        data['post_is_liked'] = liked
-        return data
+def show_business(request, business_name_slug):
+    context_dict = {}
+    try:
+        business = Business.objects.get(slug=business_name_slug)
+        posts = Post.objects.filter(business_id=business).order_by('-visits')
+        user = request.user
+        context_dict['business'] = business
+        context_dict['posts'] = posts
+        context_dict['user'] = user
+    except Business.DoesNotExist:
+        context_dict['business'] = None
+        context_dict['posts'] = None
+        context_dict['user'] = None
+    return render(request, 'voucher/business.html', context=context_dict)
 
 
 def show_post(request, business_name_slug, post_id):

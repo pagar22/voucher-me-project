@@ -68,20 +68,7 @@ header, nav, footer, section, article, aside{
                     {% endfor %}
 					</section>
                 </ul>
-				
-				{% if user.is_authenticated %}
-                    <form action="{% url 'voucherMe:business_like' business.likes %}" method="POST">
-                    {% csrf_token %}
 
-                    {% if post_is_liked %}
-                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
-                    {% else %}
-                        <button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
-                    {% endif %}
-                    </form>
-                {% else %}
-                    <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
-                {% endif %}
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}
