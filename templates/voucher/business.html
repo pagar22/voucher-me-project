@@ -10,6 +10,29 @@
 
     {% block body_block %}
         {% if business %}
+		<style>
+		html, body, address, blockquote, div,
+form, fieldset, caption,
+h1, h2, h3, h4, h5, h6,
+hr, ul, li, ol, ul, dl, dt, dd, br,
+table, tr, td, th, p, img{
+    margin: 0;
+    padding: 0;
+}
+
+header, nav, footer, section, article, aside{
+    display: block;
+}
+#services ul{
+  display:table;
+}
+#services li{
+    display: table-cell;
+    width: 250px;
+    height: 40px;
+    border: 0.5px solid;
+}
+</style>
                 <div class="jumbotron p-1">
                     <div class="container">
                         <h2 align="center">Welcome to {{ business.name }}</h2>
@@ -17,18 +40,35 @@
                 </div>
             {% if posts %}
                 <h4>Posts</h4>
-				<section id="myList">
-                <ul>
-                    {% for post in posts %}
-                        <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
-						<ul>
-							<li> { { post.visits } }</li>
-							{% if post.promo %}
-								<li> { { post.promo } } </li>
-								{% endif %}
-                    {% endfor %}
-                </ul>
+				<section id="services">
+				<ul>
+					<li><strong><center> Post Title </strong> </li> <pre class="tab"> </pre>
+					<li><strong><center> Post Likes </strong></li> <pre class="tab"> </pre>
+					<li><strong><center> Tags </strong></li> <pre class="tab"> </pre>
+					<li><strong><center> Promo Code </strong></li>
+					<br>
 				</section>
+                <ul>
+				<br>
+				<section id="services">
+                    {% for post in posts %}
+					<ul>
+                        <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
+						<pre class="tab"> </pre>
+							<li> {{ post.visits }}</li>
+							<pre class="tab"> </pre>
+							<li> {{ post.tags}}</li>
+							<pre class="tab"> </pre>
+							{% if post.promo %}
+								<li> {{ post.promo }} </li>
+								{% endif %}
+						</ul>
+						<h5></h5>
+						<br>
+                    {% endfor %}
+					</section>
+                </ul>
+				
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}

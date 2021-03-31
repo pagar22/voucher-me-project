@@ -25,7 +25,7 @@
                     <li>{{ post.name }}</li>
                     <li>{{ post.description }}</li>
                     {% if post.promo %}
-                        <li><output type="text" value= {{ post.promo }} id="CopyCode">
+                        <li><input type="text" value= {{ post.promo }} id="CopyCode">
                             <button onclick="copyText()">Copy the voucher code!</button></li>
                     {% endif %}
                 </ul>
