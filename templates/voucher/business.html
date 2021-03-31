@@ -57,7 +57,7 @@ header, nav, footer, section, article, aside{
 						<pre class="tab"> </pre>
 							<li> {{ post.visits }}</li>
 							<pre class="tab"> </pre>
-							<li> {{ post.tags}}</li>
+							<li>{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</li>
 							<pre class="tab"> </pre>
 							{% if post.promo %}
 								<li> {{ post.promo }} </li>
@@ -70,6 +70,7 @@ header, nav, footer, section, article, aside{
                 </ul>
 				
 				{% if user.is_authenticated %}
+<<<<<<< HEAD
                     <form action="{url 'voucherMe:business' business.likes %}" method="POST">
                     {% csrf_token %}
 
@@ -82,6 +83,20 @@ header, nav, footer, section, article, aside{
                 {% else %}
                     <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
                 {% endif %}
+=======
+					<form action="{url 'voucherMe:business' business.likes %}" method="POST">
+					{% csrf_token %}
+					
+					{% if post_is_liked %}
+						<button type="submit" name="add like" value="{{business.likes}}" class="btn btn-info">Unlike</button>
+					{% else %}
+						<button type="submit" name="add_like" value="{{business.likes}}" class="btn btn-info">Like</button>
+					{% endif %}
+					</form>
+				{% else %}
+					<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+				{% endif %}
+>>>>>>> d0b978bed8ee51c610a0e1c990bbcff6c3e8a930
             {% else %}
                 <strong>There are no posts from {{ business.name }} yet :(</strong>
             {% endif %}
