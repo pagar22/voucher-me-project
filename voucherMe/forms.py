@@ -34,6 +34,7 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     owner = forms.BooleanField(widget=forms.HiddenInput)
+    picture = forms.ImageField(required=False)
     class Meta:
         model = UserProfile
         fields = ('picture',)
