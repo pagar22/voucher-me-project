@@ -42,26 +42,25 @@
                 </div>
             </nav>
         </header>
-        
-        <div class="container-fluid">
+
+         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-				
                     <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                        <img src="{% static 'images/Logo.jpg' %} "alt="Our Amazing Logo" style="width:130px;height:100px;/> 
+                        <img src="{% static 'images/Logo.jpg' %} "alt="Our Amazing Logo" style="width:130px;height:100px;"/>
+                        <p>&copy; 2020 Tango With Django 2 &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
                     {% endblock %}
                     </div>
-					
                 </nav>
-                
-                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		
-                    {% block body_block %}{% endblock %}
-                    
+
+                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+                    {% block body_block %} {% endblock %}
+
                     <!-- FOOTER -->
                     <footer>
-                        
-                        
+                        <br/>
+                        <p class="float-left"><a href="#">Back to top</a></p>
                     </footer>
                 </main>
             </div>
