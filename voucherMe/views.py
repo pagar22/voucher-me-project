@@ -12,7 +12,7 @@ from voucherMe.models import UserProfile, Business, Post
 # pageviews
 def index(request):
     post_list = Post.objects.order_by('-visits')[:10]
-    business_list = Business.objects.order_by('-likes')[:10]
+    business_list = Business.objects.order_by('-likes')[:6]
     context_dict = {}
     context_dict['posts'] = post_list
     context_dict['businesses'] = business_list
@@ -59,7 +59,6 @@ def add_business(request, username):
     return render(request, 'voucher/add_business.html', context_dict)
 
 
-# how to get user object and assign value (not null), don't want to reassign new
 @login_required
 def add_post(request, business_name_slug):
     try:
@@ -87,6 +86,11 @@ def add_post(request, business_name_slug):
 
 
 # show
+def all_businesses(request):
+    business_list = Business.objects.order_by('-likes')
+    context_dict = {'businesses': business_list}
+    return render(request, 'voucher/all_businesses.html', context=context_dict)
+
 def show_business(request, business_name_slug):
     context_dict = {}
     try:

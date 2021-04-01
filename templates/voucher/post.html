@@ -15,27 +15,43 @@
 			copyText.select();
 			copyText.setSelectionRange(0, 99999)
 			document.execCommand("copy");
-			alert("Copied the text: " + copyText.value);
+			alert("Promo " + copyText.value + " copied!");
 		}
         </script>
+        <style>
+        .text{
+            background: aliceblue;
+            width: 40%;
+            padding: 1%;
+            font-family: Georgia;
+            font-size: 15px;
+            text-align: center;
+        }
+        </style>
             {% if post %}
-			
-                <h2 align="center">"{{ post.name }}" by {{ business.name }}</h2>
-                <ul>
-                    <li>{{ post.name }}</li>
-                    <li>{{ post.description }}</li>
-                    {% if post.promo %}
-                        <li><input type="text" value= {{ post.promo }} id="CopyCode">
-                            <button onclick="copyText()">Copy the voucher code!</button></li>
-                    {% endif %}
-                </ul>
-				
-			
-			
-			
-			
+                <div class="jumbotron p-1">
+                    <div class="container">
+                        <h3 class="jumbotron-heading" align="center">"{{ post.name }}" by
+                            <a href="{% url 'voucherMe:show_business' post.business.slug%}">{{ post.business }}</a>
+                        </h3>
+                    </div>
+                </div>
+                <div align="center">
+                <p style="color: white"><strong>Description</strong></p>
+                <p class="text">
+                {{ post.description }}
+                </p>
+                    <p class="text">{{ post.get_tags_category_display }}</p>
+                    <p class="text">{{ post.get_tags_type_display }}</p>
+                {% if post.promo %}
+                    <p style="color: white"><strong>Promo Code</strong></p>
+                    <input type="text" value= {{ post.promo }} id="CopyCode" style="text-transform: uppercase; text-align: center"/>
+                    <br/><br/>
+                    <button onclick="copyText()"class="btn btn-info">Copy Promo!</button>
+                {% endif %}
+                </div>
             {% else %}
-                <strong>There are no posts from this business yet :(</strong>
+                <strong>You're lost wanderer, post not found :(</strong>
             {% endif %}
         
         <br><br>

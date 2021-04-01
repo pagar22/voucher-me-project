@@ -11,12 +11,11 @@
 {% block body_block %}
     <style>
 #round {
+    background-color: #f6f4f8;
   border-radius: 50%;
-    border: 1px solid #514069;
+    border: 5px solid #4b3964;
 }
-.font{
-    color: #514069;
-}
+
 #wrapper {
     width: 500px;
     overflow: hidden; /* will contain if #first is longer than #second */
@@ -27,7 +26,7 @@
 }
 #second {
     float:left;
-    overflow: hidden; /* if you don't want #second to wrap below #first */
+    overflow: auto;
 }
     </style>
     <script>
@@ -46,12 +45,12 @@
     <div id="wrapper">
     <div id = first>
     {% if userprofile.picture %}
-        <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 200px">
+        <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 80%">
     {% else %}
         <img id="round" src="{% static 'images/profile.png' %}" alt="profile_picture" style="width: 200px">
     {% endif %}
     <br>
-    <h6 class="font">{{ user.username }}</h6>
+    <br>
 {% else %}
     No account registered :( Retry!
     <a href="{% url 'VoucherMe:index' %}">Back to Homepage</a></li>
@@ -61,7 +60,7 @@
 
     <div id="second">
         {% if businesses %}
-            <p>Here are the businesses you own!</p>
+            <h4 style="color: aliceblue">Here are the businesses you own!</h4>
             <ul>
                 {% for business in businesses %}
                     <li><a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a></li>
@@ -71,7 +70,7 @@
                 <button class="btn btn-primary">Add another business!</button>
             </a>
         {% else %}
-            <p>You don't own any businesses yet :( </p>
+            <h4 style="color: aliceblue; align-content: center">You don't own any businesses yet :( </h4>
             <br>
             <a href="{% url 'voucherMe:add_business' user.username %}">
                 <button class="btn btn-info">Add one now!</button>
