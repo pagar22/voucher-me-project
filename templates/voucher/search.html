@@ -1,0 +1,96 @@
+{% extends "voucher/base.html" %}
+{% load static %}
+    {% block title_block %}
+        Search
+    {% endblock %}
+
+ {% block body_block %}
+     <style>
+
+     .card {
+    background-color: aliceblue;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+     .bus-image{
+         border-radius: 50%;
+         border: 1px solid #47345b;
+         width: 25%;
+         height: 100px;
+         overflow: hidden;
+         display: flex;
+         justify-content: center;
+     }
+     .text{
+         background: aliceblue;
+         width: 40%;
+         padding: 1%;
+         font-family: Georgia, serif;
+         font-size: 15px;
+         text-align: center;
+     }
+     </style>
+     <div class="jumbotron p-1">
+         <div class="container">
+             <h2 align="center">Search</h2>
+         </div>
+     </div>
+     <div align="center">
+     {% if results %}
+         <p class="text">Here are the best results we could find!</p>
+     {% else %}
+         <p class="text">No matching results for your query :(</p>
+     {% endif %}
+     </div>
+     {% ifequal type "business" %}
+         {% for business in results %}
+             <center>
+             <div class="card">
+                 {% if business.image %}
+                     <center>
+                     <div class="bus-image">
+                         <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
+                     </div>
+                 {% else %}
+                     <center>
+                     <div class="bus-image">
+                         <img src="{% static 'images/img_2.png' %}">
+                     </div>
+                 {% endif %}
+                 <div class = "container">
+                     <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                 </div>
+             </div>
+             <br>
+             </center>
+             <br>
+         {% endfor %}
+
+     {% else %}
+         {% for post in results %}
+             <center>
+             <div class="card">
+                 <div class = "container">
+                     <strong><a href="{% url 'voucherMe:show_post' post.business.slug post.id %}">{{ post.name }}</a></strong>
+                     <br/>
+                     by <a href="{% url 'voucherMe:show_business' post.business.slug %}">{{ post.business.name }}</a>
+                     <br/>
+                     {{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}
+                 </div>
+             </div>
+             <br>
+             </center>
+             <br>
+         {% endfor %}
+     {% endifequal %}
+
+{% endblock %}

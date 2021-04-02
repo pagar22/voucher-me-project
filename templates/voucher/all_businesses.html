@@ -5,9 +5,9 @@
     {% endblock %}
 
  {% block body_block %}
-     <div class="jumbotron p-1">
+     <div class="jumbotron p-1" style="background-color: aliceblue">
          <div class="container">
-             <h2 align="center">Businesses on VoucherMe!</h2>
+             <h2 align="center">All Businesses on VoucherMe!</h2>
          </div>
      </div>
 <style>
@@ -15,7 +15,7 @@
 cards
 */
 .card {
-    background-color: #f2ebf3;
+    background-color: aliceblue;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     width: 40%;
@@ -40,28 +40,46 @@ cards
 </style>
 
      <center>
+     <div class="container" style="width: 50%">
+         <div class="form-group">
+             <form role="form" method="get" action="{% url 'voucherMe:search' "business" %}">
+                 {% csrf_token %}
+                 <div class="form-group">
+                     <label for="id_search" class="sr-only">Search</label>
+                     <input type="text" name="search" id="id_search" class="form-control"
+                            placeholder="Find Popular Businesses..." required autofocus style="margin-bottom: 6px">
+                 </div>
+                 <button class="btn btn-primary" type="submit" name="submit">
+                    Search!
+             </button>
+             </form>
+         </div>
+     </div>
+     </center>
+
+     <center>
      {% if businesses %}
-            {% for business in businesses %}
-			<div class="card">
-			{% if business.image %}
-			<center>
-                <div class="bus-image">
-                    <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
-                </div>
-            {% else %}
-                <center>
-                <div class="bus-image">
-                    <img src="{% static 'images/img_2.png' %}">
-                </div>
-            {% endif %}
-				<div class = "container">
-					<a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
-                </div>
-            </div>
-                <br>
-            {% endfor %}
+         {% for business in businesses %}
+             <div class="card">
+                 {% if business.image %}
+                     <center/>
+                     <div class="bus-image">
+                         <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
+                     </div>
+                 {% else %}
+                     <center/>
+                     <div class="bus-image">
+                         <img src="{% static 'images/img_2.png' %}">
+                     </div>
+                 {% endif %}
+                 <div class = "container">
+                     <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                 </div>
+             </div>
+             <br>
+         {% endfor %}
     {% else %}
         <strong>There are no businesses register on VoucherMe yet :(</strong>
-    {% endif %}
-     <br><br>
-    {% endblock %}
+     {% endif %}
+     </center>
+ {% endblock %}

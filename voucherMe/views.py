@@ -11,8 +11,8 @@ from voucherMe.models import UserProfile, Business, Post
 
 # pageviews
 def index(request):
-    post_list = Post.objects.order_by('-visits')[:10]
-    business_list = Business.objects.order_by('-likes')[:6]
+    post_list = Post.objects.order_by('-visits')[:5]
+    business_list = Business.objects.order_by('-likes')[:5]
     context_dict = {}
     context_dict['posts'] = post_list
     context_dict['businesses'] = business_list
@@ -31,6 +31,24 @@ def profile(request, username):
     businesses = Business.objects.filter(user_id=user).order_by('-likes')
     context_dict = {'user': user, 'userprofile': userprofile, 'businesses': businesses}
     return render(request, 'voucher/account.html', context=context_dict)
+
+def search(request, type):
+    context_dict = {}
+    if request.method == 'GET':
+        query = request.GET.get('search')
+        query.strip() #attempt to remove whitespaces
+        try:
+            if type == "business":
+                result = Business.objects.filter(name__icontains=query).order_by('-likes')
+            else:
+                result = Post.objects.filter(name__icontains=query).order_by('-visits')
+        except Business.DoesNotExist or Post.DoesNotExist:
+            result = None
+        context_dict['type'] = type
+        context_dict['results'] = result
+        return render(request, 'voucher/search.html', context=context_dict)
+    return render(request, 'voucher/search.html', context=context_dict)
+
 
 
 # Add
@@ -90,6 +108,11 @@ def all_businesses(request):
     business_list = Business.objects.order_by('-likes')
     context_dict = {'businesses': business_list}
     return render(request, 'voucher/all_businesses.html', context=context_dict)
+
+def all_posts(request):
+    posts_list = Post.objects.order_by('-visits')
+    context_dict = {'posts':posts_list}
+    return render(request, 'voucher/all_posts.html', context=context_dict)
 
 def show_business(request, business_name_slug):
     context_dict = {}
