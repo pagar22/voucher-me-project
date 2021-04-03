@@ -10,30 +10,7 @@
 
     {% block body_block %}
         {% if business %}
-		<style>
-		html, body, address, blockquote, div,
-form, fieldset, caption,
-h1, h2, h3, h4, h5, h6,
-hr, ul, li, ol, ul, dl, dt, dd, br,
-table, tr, td, th, p, img{
-    margin: 0;
-    padding: 0;
-}
-
-header, nav, footer, section, article, aside{
-    display: block;
-}
-#services ul{
-  display:table;
-}
-#services li{
-    display: table-cell;
-    width: 250px;
-    height: 40px;
-    border: 2px solid;
-    border-radius: 7%;
-}
-</style>
+		
                 <div class="jumbotron p-1">
                     <div class="container">
                         <h2 align="center">Welcome to {{ business.name }}</h2>

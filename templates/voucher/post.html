@@ -9,25 +9,8 @@
     {% endblock %}
 
     {% block body_block %}
-        <script>
-			function copyText() {
-			var copyText = document.getElementById("CopyCode");
-			copyText.select();
-			copyText.setSelectionRange(0, 99999)
-			document.execCommand("copy");
-			alert("Promo " + copyText.value + " copied!");
-		}
-        </script>
-        <style>
-        .text{
-            background: aliceblue;
-            width: 40%;
-            padding: 1%;
-            font-family: Georgia, serif;
-            font-size: 15px;
-            text-align: center;
-        }
-        </style>
+        <script src="{% static 'js/functions.js' %}"></script>
+        
             {% if post %}
                 <div class="jumbotron p-1">
                     <div class="container">

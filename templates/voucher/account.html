@@ -9,31 +9,8 @@
     {% endblock %}
 
 {% block body_block %}
-    <style>
-#round {
-    background-color: #f6f4f8;
-  border-radius: 50%;
-    border: 5px solid #4b3964;
-}
-
-#wrapper {
-    width: 500px;
-    overflow: hidden; /* will contain if #first is longer than #second */
-}
-#first {
-    width: 300px;
-    float:left; /* add this */
-}
-#second {
-    float:left;
-    overflow: auto;
-}
-    </style>
-    <script>
-    function alertFunction(){
-        alert("Do you really want to log out?");
-    }
-    </script>
+   <script src="{% static 'js/functions.js' %}"></script>
+    
 
 {% if user.is_authenticated %}
     <div class="jumbotron p-1">
