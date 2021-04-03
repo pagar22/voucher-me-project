@@ -4,10 +4,34 @@
 {% block title_block %}About Us!{% endblock %}
 
 {% block body_block %}
-	<h1>About us</h1>
-	
-	This is our about page.<br/>
-	<img src="{% static 'images/voucher.jpg' %}" alt="Picture of a voucher" />
-	<br>
-	<br>
+    <div class="jumbotron p-1" style="background-color: aliceblue">
+         <div class="container">
+             <h2 align="center">About VoucherMe!</h2>
+         </div>
+     </div>
+    <style>
+    .text{
+            background: aliceblue;
+            width: 68%;
+            padding: 1%;
+            font-family: Georgia, serif;
+            font-size: 15px;
+            text-align: justify;
+        }
+    </style>
+
+    <center>
+	<p class="text">
+        VoucherMe provides a platform for businesses to advertise by posting regular updates on their business’s growth/development while also posting exclusive offers on time-limited promo codes, schemes or vouchers.
+        Users can view this information without registering to the web app and can upvote a business’s post if they’re interested in it. This would enable businesses to keep track of their marketing trends and site effectiveness by gaining valuable feedback.
+        Businesses can build their profile to attract more customers by attaching external links to their websites/resources or posting frequently.
+        Businesses can also look at the schemes/advertising strategies of other businesses to get an outlook of their competition and make relevant business decisions thereon.
+    </p><br/>
+	<img src="{% static 'images/about.jpg' %}" alt="Picture of a voucher" style="width: 34%; height: 9%"/>
+	<br/><br/><br/>
+        <p class="text">
+            VoucherMe was created by Harvey Cameron-Sproull and Aaryan Pagar as part of their WAD2 assessed exercise (for which they obviously got an A1).
+        </p>
+	<br/>
+    </center>
 	{% endblock %}

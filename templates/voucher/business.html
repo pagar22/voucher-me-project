@@ -30,7 +30,8 @@ header, nav, footer, section, article, aside{
     display: table-cell;
     width: 250px;
     height: 40px;
-    border: 0.5px solid;
+    border: 2px solid;
+    border-radius: 7%;
 }
 </style>
                 <div class="jumbotron p-1">
@@ -78,6 +79,12 @@ header, nav, footer, section, article, aside{
                     <button class="btn btn-primary">Add a new post now!</button>
                 </a>
             {% endifequal %}
+        {% else %}
+            <div class="jumbotron p-1">
+                    <div class="container">
+                        <h2 align="center">The business you're looking for does not exist :(</h2>
+                    </div>
+                </div>
         {% endif %}
         <br><br>
     {% endblock %}

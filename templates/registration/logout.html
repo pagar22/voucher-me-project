@@ -4,11 +4,19 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Logged Out</h1>
+    <div class="jumbotron p-1" style="background-color: aliceblue">
+         <div class="container">
+             <h2 align="center">Log out</h2>
+         </div>
+     </div>
     <br>
-    <p>
-        Log out successful. We're sad to see you go :(
-    </p>
+    <h4 style="color: aliceblue" align="center">
+        Logged out successfully. We're sad to see you go :(
+    </h4>
     <br>
-    <a href="{% url 'voucherMe:index' %}">Back to Homepage</a>
+    <center>
+    <a href="{% url 'voucherMe:index' %}">
+        <button class="btn btn-info">Home</button>
+    </a>
+    </center>
 {% endblock %}
