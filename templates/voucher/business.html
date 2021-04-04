@@ -48,8 +48,23 @@
                 </ul>
 
             {% else %}
-                <strong>There are no posts from {{ business.name }} yet :(</strong>
+                There are no posts from <strong id="business">{{ business.name }} </strong> yet :(
             {% endif %}
+			
+			<br>
+		<strong id="like_count">{{ business.likes }}</strong> people like this business
+
+		{% if user.is_authenticated %}
+		<br>
+			   <button id="likes" data-catid="{{ business.name }}" class="btn btn-primary" type="button">
+			<span class="glyphicon glyphicon-thumbs-up"></span>
+			Like
+			</button>
+		{% endif %}
+			
+			
+		
+			<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
             <br><br>
             {% ifequal user business.user %}
                 <a href="{% url 'voucherMe:add_post' business.slug %}">
