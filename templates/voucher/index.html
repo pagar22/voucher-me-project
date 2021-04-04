@@ -9,49 +9,55 @@
           <h3 class="jumbotron-heading" align="center">Welcome to VoucherMe</h3>
       </div>
     </div>
-    <center>
-    {% if posts %}
-        <h3 align="center" style="color: aliceblue">Top Trending Posts</h3><br/>
-        {% for post in posts %}
-            <div class="card">
-                <div class = "container">
-                    <strong><a href="{% url 'voucherMe:show_post' post.business.slug post.id %}">{{ post.name }}</a></strong>
-                    <br/>
-                    by <a href="{% url 'voucherMe:show_business' post.business.slug %}">{{ post.business.name }}</a>
-                    <br/>
-                    {{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}
-                </div>
-            </div>
-            <br>
-        {% endfor %}
-    {% else %}
-        <p style="color: aliceblue"><strong>There are no posts on VoucherMe currently :(</strong></p>
-    {% endif %}
-    <br>
-        {% if businesses %}
-            <h3 align="center" style="color: aliceblue">Most Popular Businesses</h3><br/>
-            {% for business in businesses %}
-                <div class="card">
-                    {% if business.image %}
-                        <center>
-                        <div class="bus-image">
-                            <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
-                        </div>
-                    {% else %}
-                        <center>
-                        <div class="bus-image">
-                            <img src="{% static 'images/img_2.png' %}">
-                        </div>
-                    {% endif %}
-                    <div class = "container">
-                        <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
-                    </div>
-                </div>
-                <br>
-            {% endfor %}
-        {% else %}
-            <p style="color: aliceblue"><strong>There are no businesses register on VoucherMe yet :(</strong></p>
-        {% endif %}
-    </center>
+<center>
+	<div class="left column">
+                  {% if posts %}
+                      <h3 align="center" style="color: aliceblue">Top Trending Posts</h3><br/>
+                      {% for post in posts %}
+                          <div class="card">
+                              <div class = "container">
+                                  <strong><a href="{% url 'voucherMe:show_post' post.business.slug post.id %}">{{ post.name }}</a></strong>
+                                  <br/>
+                                  by <a href="{% url 'voucherMe:show_business' post.business.slug %}">{{ post.business.name }}</a>
+                                  <br/>
+                                  {{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}
+                              </div>
+                          </div>
+                          <br>
+                      {% endfor %}
+                  {% else %}
+                      <strong>There are no posts on VoucherMe currently :(</strong>
+                  {% endif %}
+    </div>
+
+              <br>
+			  
+    <div class="right column">
+              {% if businesses %}
+                  <h3 align="center" style="color: aliceblue">Most Popular Businesses</h3><br/>
+                  {% for business in businesses %}
+                      <div class="card">
+                          {% if business.image %}
+                              <center>
+                              <div class="bus-image">
+                                  <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
+                              </div>
+                          {% else %}
+                              <center>
+                              <div class="bus-image">
+                                  <img src="{% static 'images/img_2.png' %}">
+                              </div>
+                          {% endif %}
+                          <div class = "container">
+                              <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                          </div>
+                      </div>
+                      <br>
+                  {% endfor %}
+              {% else %}
+                  <strong>There are no businesses register on VoucherMe yet :(</strong>
+              {% endif %}
+    </div>
+</center>
 
 {% endblock %}

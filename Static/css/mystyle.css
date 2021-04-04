@@ -34,6 +34,14 @@ header, nav, footer, section, article, aside{
     border-color: aliceblue;
     border-radius: 7%;
 }
+div.left-column {
+  float: left;
+}
+div.right-column {
+  float: right;
+}
+
+
 
 
 .feather {

@@ -65,10 +65,10 @@
 						<pre class="tab"> </pre>
                         <li><strong><center><p class="text">{{ post.visits }}</p></center></strong></li>
 							<pre class="tab"> </pre>
-							<li>{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</li>
+                        <li><center><p class="text" style="width: 100%">{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</p></center></li>
 							<pre class="tab"> </pre>
 							{% if post.promo %}
-								<li> {{ post.promo }} </li>
+                                <li><strong><center><p class="text">{{ post.promo }} </p></center></strong></li>
                             {% else %}
                                 <li/>
                             {% endif %}
@@ -82,7 +82,6 @@
             {% else %}
                 <p style="color: aliceblue">There are no posts from <strong id="business">{{ business.name }} </strong> yet :(</p>
             {% endif %}
-            <br><br>
         {% else %}
             <p style="color: aliceblue"><strong>You're lost wanderer, business does not exist</strong></p>
         {% endif %}
