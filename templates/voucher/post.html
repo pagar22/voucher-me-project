@@ -14,7 +14,7 @@
             {% if post %}
                 <div class="jumbotron p-1">
                     <div class="container">
-                        <h3 class="jumbotron-heading" align="center">"{{ post.name }}" by
+                        <h3 class="jumbotron-heading" align="center">"{{ post.name }}" {{ visits }} by
                             <a href="{% url 'voucherMe:show_business' post.business.slug%}">{{ post.business }}</a>
                         </h3>
                     </div>

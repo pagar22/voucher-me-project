@@ -4,26 +4,24 @@ body, html {
 			font-size: 1rem;
         }
         .custombg {
-            background-image: url("{% static 'images/img_3.png' %}");
+            background-image: url("image/img_2.png");
             background-position: center;
             background-size: cover;
             background-repeat: repeat;
         }
 
 
-		
-		
-		
-		/*
-		business lists
-		*/
-		html, body, address, blockquote, div,
+
+
+
+/* business lists */
+html, body, address, blockquote, div,
 form, fieldset, caption,
 h1, h2, h3, h4, h5, h6,
 hr, ul, li, ol, ul, dl, dt, dd, br,
 table, tr, td, th, p, img{
-    margin: 0;
-    padding: 0;
+            margin: 0;
+            padding: 0;
 }
 
 header, nav, footer, section, article, aside{
@@ -37,8 +35,9 @@ header, nav, footer, section, article, aside{
     width: 250px;
     height: 40px;
     border: 2px solid;
+    border-color: aliceblue;
     border-radius: 7%;
-}		
+}
 
 
 .feather {
@@ -114,9 +113,9 @@ for post
  * Sidebar
  */
 
- 
- 
- 
+
+
+
 .sidebar {
   position: fixed;
   top: 0;
