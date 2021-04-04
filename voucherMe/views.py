@@ -155,10 +155,10 @@ def like_business(request):
 
     likes = 0
     if cat_id:
-        cat = cat.objects.get(id=int(cat_id))
-        if cat:
-            likes = cat.likes + 1
-            cat.likes =  likes
+        business = business.objects.get(id=int(cat_id))
+        if business:
+            likes = business.likes + 1
+            business.likes =  likes
             cat.save()
 
     return HttpResponse(likes)
