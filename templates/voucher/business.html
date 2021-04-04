@@ -9,21 +9,51 @@
     {% endblock %}
 
     {% block body_block %}
+
         {% if business %}
-		
-                <div class="jumbotron p-1">
-                    <div class="container">
-                        <h2 align="center">Welcome to {{ business.name }}</h2>
-                    </div>
+            <div class="jumbotron p-1">
+                <div class="container">
+                    <h2 align="center">Welcome to {{ business.name }}</h2>
                 </div>
+            </div>
+
+            <div class="float-container">
+                <div class="float-child" style="width: 27%;">
+                    {% if business.image %}
+                        <img id="round" src="{{ business.image.url }}" alt="business_picture" style="width: 80%; height: 80%">
+                    {% else %}
+                        <img id="round" src="{% static 'images/img_2.png' %}" alt="profile_picture" style="width: 40%">
+                    {% endif %}
+                </div>
+                <br><br>
+
+                <div class="float-child" style="width: 38%">
+                    <p style="color: aliceblue"><strong>Popularity</strong></p>
+                    {% with ''|center:popularity as range %}
+                        {% for i in range %}
+                            <img src="{% static 'images/star.png' %}" alt="star" style="width: 5%; height: 5%">
+                        {% endfor %}
+                    {% endwith %}<br/><br/>
+                    {% ifequal user business.user %}
+                        <a href="{% url 'voucherMe:add_post' business.slug %}">
+                            <button class="btn btn-info">Add a new post now!</button>
+                        </a>
+                    {% endifequal %}
+                </div>
+                <div class="float-child">
+                    <center><p style="color: aliceblue"><strong>About</strong></p></center><br/>
+                    <p class="text" style="width: 100%">{{ business.description }}</p>
+                </div>
+            </div>
+
             {% if posts %}
-                <h4>Posts</h4>
-				<section id="services">
+                <h4 style="color: aliceblue" align="center">Posts</h4><br/>
+                <section id="services">
 				<ul>
-					<li><strong><center> Post Title </strong> </li> <pre class="tab"> </pre>
-					<li><strong><center> Post visits </strong></li> <pre class="tab"> </pre>
-					<li><strong><center> Tags </strong></li> <pre class="tab"> </pre>
-					<li><strong><center> Promo Code </strong></li>
+                    <li><strong><center> <p class="text" style="width: 100%"> Post Name</p> </strong> </li> <pre class="tab"> </pre>
+                    <li><strong><center> <p class="text" style="width: 100%">Post visits</p> </strong></li> <pre class="tab"> </pre>
+                    <li><strong><center> <p class="text" style="width: 100%">Tags </p></strong></li> <pre class="tab"> </pre>
+                    <li><strong><center> <p class="text" style="width: 100%">Promo Code </p></strong></li>
 					<br>
 				</section>
                 <ul>
@@ -31,15 +61,17 @@
 				<section id="services">
                     {% for post in posts %}
 					<ul>
-                        <li><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></li>
+                        <li><strong><center><p class="text" style="width: 100%"><a href="{% url 'voucherMe:show_post' business.slug post.id %}">{{ post.name }}</a></p></center></strong></li>
 						<pre class="tab"> </pre>
-							<li> {{ post.visits }}</li>
+                        <li><strong><center><p class="text">{{ post.visits }}</p></center></strong></li>
 							<pre class="tab"> </pre>
 							<li>{{ post.get_tags_category_display }} | {{ post.get_tags_type_display }}</li>
 							<pre class="tab"> </pre>
 							{% if post.promo %}
 								<li> {{ post.promo }} </li>
-								{% endif %}
+                            {% else %}
+                                <li/>
+                            {% endif %}
 						</ul>
 						<h5></h5>
 						<br>
@@ -48,31 +80,9 @@
                 </ul>
 
             {% else %}
-                There are no posts from <strong id="business">{{ business.name }} </strong> yet :(
+                <p style="color: aliceblue">There are no posts from <strong id="business">{{ business.name }} </strong> yet :(</p>
             {% endif %}
-			
-			<br>
-			<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
-			
-			
-		<strong id="like_count">{{ business.likes }}</strong> likes
-			{% if user.is_authenticated %}
-			<button id="like_btn"
-				data-categoryid="{{ business.name }}"
-				class="btn btn-primary btn-sm"
-				type="button">
-				<span data-feather="thumbs-up"></span>
-				Like Business
-				</button>
-			{% endif %}
-			
-
             <br><br>
-            {% ifequal user business.user %}
-                <a href="{% url 'voucherMe:add_post' business.slug %}">
-                    <button class="btn btn-primary">Add a new post now!</button>
-                </a>
-            {% endifequal %}
         {% else %}
             <p style="color: aliceblue"><strong>You're lost wanderer, business does not exist</strong></p>
         {% endif %}

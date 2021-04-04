@@ -3,16 +3,12 @@ body, html {
             margin: 0;
 			font-size: 1rem;
         }
-        .custombg {
-            background-image: url("image/img_2.png");
-            background-position: center;
-            background-size: cover;
-            background-repeat: repeat;
-        }
-
-
-
-
+.custombg {
+    background-image: url("image/backdroop.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: repeat;
+}
 
 /* business lists */
 html, body, address, blockquote, div,
@@ -52,12 +48,12 @@ for account page
 */
 #round {
     background-color: #f6f4f8;
-  border-radius: 50%;
+    border-radius: 50%;
     border: 5px solid #4b3964;
 }
 
 #wrapper {
-    width: 500px;
+    width: 100%;
     overflow: hidden; /* will contain if #first is longer than #second */
 }
 #first {
@@ -65,7 +61,12 @@ for account page
     float:left; /* add this */
 }
 #second {
+    width: 600px;
     float:left;
+    overflow: auto;
+}
+#third{
+    float: left;
     overflow: auto;
 }
 
@@ -109,12 +110,21 @@ for post
             font-size: 15px;
             text-align: center;
         }
+
+
+ .float-container {
+     height: 30%;
+}
+
+.float-child {
+    width: 33%;
+    float: left;
+}
+
+
 /*
  * Sidebar
  */
-
-
-
 
 .sidebar {
   position: fixed;

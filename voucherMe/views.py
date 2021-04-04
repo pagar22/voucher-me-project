@@ -127,6 +127,23 @@ def show_business(request, business_name_slug):
         context_dict['business'] = None
         context_dict['posts'] = None
         context_dict['user'] = None
+
+    total_visits = 0
+    popularity = 0
+    for post in posts:
+        total_visits = total_visits+post.visits
+    if total_visits >= 0 and total_visits <= 10:
+        popularity = 1
+    elif total_visits > 10 and total_visits <= 20:
+        popularity = 2
+    if total_visits > 20 and total_visits <= 40:
+        popularity = 3
+    if total_visits > 40 and total_visits <= 70:
+        popularity = 4
+    if total_visits > 70:
+        popularity = 5
+
+    context_dict['popularity'] = popularity
     return render(request, 'voucher/business.html', context=context_dict)
 
 
@@ -139,15 +156,13 @@ def show_post(request, business_name_slug, post_id):
         post = Post.objects.get(id=post_id)
         context_dict['business'] = business
         context_dict['post'] = post
-        context_dict['visits'] = post.visits
-        context_dict['promo'] = post.promo
     except Post.DoesNotExist:
         context_dict['business'] = None
         context_dict['post'] = None
 
     visitor_cookie_handler(request)
     post.visits = request.session['visits']
-    context_dict['visits'] = request.session['visits']
+    post.save()
     return render(request, 'voucher/post.html', context=context_dict)
 
 @login_required
