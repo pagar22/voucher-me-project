@@ -150,20 +150,7 @@ def show_post(request, business_name_slug, post_id):
     context_dict['visits'] = request.session['visits']
     return render(request, 'voucher/post.html', context=context_dict)
 
-@login_required
-class LikeCategoryView():
-    def get(self, request):
-        category_id = request.GET['business']
-        try:
-            category = Business.objects.get(id=int(category_id))
-        except Business.DoesNotExist:
-            return HttpResponse(-1)
-        except ValueError:
-            return HttpResponse(-1)
 
-        Business.likes = Business.likes + 1
-        Business.save()
-        return HttpResponse(Business.likes)
 
 # cookie handler
 def get_server_side_cookie(request, cookie, default_val=None):

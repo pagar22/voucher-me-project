@@ -51,23 +51,7 @@
                 There are no posts from <strong id="business">{{ business.name }} </strong> yet :(
             {% endif %}
 			
-			<br>
-			<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
 			
-			
-		<strong id="like_count">{{ business.likes }}</strong> likes
-			{% if user.is_authenticated %}
-			<button id="like_btn"
-				data-categoryid="{{ business.name }}"
-				class="btn btn-primary btn-sm"
-				type="button">
-				<span data-feather="thumbs-up"></span>
-				Like Business
-				</button>
-			{% endif %}
-			
-
-            <br><br>
             {% ifequal user business.user %}
                 <a href="{% url 'voucherMe:add_post' business.slug %}">
                     <button class="btn btn-primary">Add a new post now!</button>

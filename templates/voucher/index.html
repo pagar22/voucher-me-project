@@ -10,7 +10,8 @@
       </div>
     </div>
 
-    <center>
+    
+	<div class="left column">
                   {% if posts %}
                       <h3 align="center" style="color: aliceblue">Top Trending Posts</h3><br/>
                       {% for post in posts %}
@@ -28,10 +29,11 @@
                   {% else %}
                       <strong>There are no posts on VoucherMe currently :(</strong>
                   {% endif %}
-    </center>
+    </div>
 
               <br>
-    <center>
+			  
+    <div class="right column">
               {% if businesses %}
                   <h3 align="center" style="color: aliceblue">Most Popular Businesses</h3><br/>
                   {% for business in businesses %}
@@ -56,6 +58,6 @@
               {% else %}
                   <strong>There are no businesses register on VoucherMe yet :(</strong>
               {% endif %}
-    </center>
+    </div>
 
 {% endblock %}
