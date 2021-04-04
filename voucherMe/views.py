@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth import login
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
-
+from django.http import HttpResponse
 
 # pageviews
 def index(request):
@@ -16,7 +16,6 @@ def index(request):
     context_dict = {}
     context_dict['posts'] = post_list
     context_dict['businesses'] = business_list
-
     return render(request, 'voucher/index.html', context=context_dict)
 
 
@@ -33,12 +32,11 @@ def profile(request, username):
     context_dict = {'user': user, 'userprofile': userprofile, 'businesses': businesses}
     return render(request, 'voucher/account.html', context=context_dict)
 
-
 def search(request, type):
     context_dict = {}
     if request.method == 'GET':
         query = request.GET.get('search')
-        query.strip()  # attempt to remove whitespaces
+        query.strip() #attempt to remove whitespaces
         try:
             if type == "business":
                 result = Business.objects.filter(name__icontains=query).order_by('-likes')
@@ -50,6 +48,7 @@ def search(request, type):
         context_dict['results'] = result
         return render(request, 'voucher/search.html', context=context_dict)
     return render(request, 'voucher/search.html', context=context_dict)
+
 
 
 # Add
@@ -110,12 +109,10 @@ def all_businesses(request):
     context_dict = {'businesses': business_list}
     return render(request, 'voucher/all_businesses.html', context=context_dict)
 
-
 def all_posts(request):
     posts_list = Post.objects.order_by('-visits')
-    context_dict = {'posts': posts_list}
+    context_dict = {'posts':posts_list}
     return render(request, 'voucher/all_posts.html', context=context_dict)
-
 
 def show_business(request, business_name_slug):
     context_dict = {}
@@ -133,6 +130,8 @@ def show_business(request, business_name_slug):
     return render(request, 'voucher/business.html', context=context_dict)
 
 
+
+
 def show_post(request, business_name_slug, post_id):
     context_dict = {}
     try:
@@ -140,6 +139,8 @@ def show_post(request, business_name_slug, post_id):
         post = Post.objects.get(id=post_id)
         context_dict['business'] = business
         context_dict['post'] = post
+        context_dict['visits'] = post.visits
+        context_dict['promo'] = post.promo
     except Post.DoesNotExist:
         context_dict['business'] = None
         context_dict['post'] = None
@@ -147,32 +148,22 @@ def show_post(request, business_name_slug, post_id):
     visitor_cookie_handler(request)
     post.visits = request.session['visits']
     context_dict['visits'] = request.session['visits']
-
     return render(request, 'voucher/post.html', context=context_dict)
 
-def BusinessLike(request, pk):
-    post = get_object_or_404(Business, id=request.POST.get('add_like'))
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
-    else:
-        post.likes.add(request.user)
-
 @login_required
-def like_business(request):
+class LikeCategoryView():
+    def get(self, request):
+        category_id = request.GET['business']
+        try:
+            category = Business.objects.get(id=int(category_id))
+        except Business.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
 
-    cat_id = None
-    if request.method == 'GET':
-        cat_id = request.GET['business']
-
-    likes = 0
-    if cat_id:
-        cat = cat.objects.get(id=int(cat_id))
-        if cat:
-            likes = cat.likes + 1
-            cat.likes =  likes
-            cat.save()
-    return HttpResponse(likes)
-
+        Business.likes = Business.likes + 1
+        Business.save()
+        return HttpResponse(Business.likes)
 
 # cookie handler
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -183,13 +174,13 @@ def get_server_side_cookie(request, cookie, default_val=None):
 
 
 def visitor_cookie_handler(request):
-    visits = int(get_server_side_cookie(request, 'visits', '1'))
+    visits = int(get_server_side_cookie(request, 'visits', 1))
     last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
     last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
-    print(str((datetime.now() - last_visit_time).seconds))
     if (datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
         request.session['last_visit'] = str(datetime.now())
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
