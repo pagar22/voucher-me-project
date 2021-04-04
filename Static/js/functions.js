@@ -9,11 +9,15 @@ function copyText() {
 		alert("Promo " + copyText.value + " copied!");
 	}
 	
-$('#likes').click(function(){
-    var catid;
-    catid = $(this).attr("data-catid");
-    $.get('/voucherMe/like_business/', {category_id: catid}, function(data){
-               $('#like_count').html(data);
-               $('#likes').hide();
-    });
+$(document).ready(function() {
+	$('#like_btn').click(function() {
+		var catecategoryIdVar;
+		catecategoryIdVar = $(this).attr('data-categoryid');
+		$.get('/voucherMe/like_category/',
+			{'category_id': catecategoryIdVar},
+			function(data) {
+				$('#like_count').html(data);
+				$('#like_btn').hide();
+			})
+		});
 });
