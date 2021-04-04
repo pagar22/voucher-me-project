@@ -145,6 +145,7 @@ def show_post(request, business_name_slug, post_id):
         context_dict['post'] = None
 
     visitor_cookie_handler(request)
+    post.visits = request.session['visits']
     context_dict['visits'] = request.session['visits']
 
     return render(request, 'voucher/post.html', context=context_dict)
@@ -182,10 +183,10 @@ def get_server_side_cookie(request, cookie, default_val=None):
 
 
 def visitor_cookie_handler(request):
-    visits = int(request.COOKIES.get('visits', '1'))
-    last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
-    last_visit_time = datetime.strptime(last_visit_cookie[:-7],
-                                        '%Y-%m-%d %H:%M:%S')
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
+    print(str((datetime.now() - last_visit_time).seconds))
     if (datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
         request.session['last_visit'] = str(datetime.now())

@@ -14,24 +14,27 @@
             {% if post %}
                 <div class="jumbotron p-1">
                     <div class="container">
-                        <h3 class="jumbotron-heading" align="center">"{{ post.name }}" {{ visits }} by
+                        <h3 class="jumbotron-heading" align="center">"{{ post.name }}" {{ post.visits }} by
                             <a href="{% url 'voucherMe:show_business' post.business.slug%}">{{ post.business }}</a>
                         </h3>
                     </div>
                 </div>
                 <div align="center">
-                <p style="color: white"><strong>Description</strong></p>
+                <p style="color: aliceblue"><strong>Description</strong></p>
                 <p class="text">
-                {{ post.description }}
+                {{ post.description }}<br/>
                 </p>
-                    <p class="text">{{ post.get_tags_category_display }}</p>
-                    <p class="text">{{ post.get_tags_type_display }}</p>
+                    <p class="text">{{ post.get_tags_category_display }}</p><br/>
+                    <p class="text">{{ post.get_tags_type_display }}</p><br/>
                 {% if post.promo %}
-                    <p style="color: white"><strong>Promo Code</strong></p>
+                    <p style="color: aliceblue"><strong>Promo Code</strong></p>
                     <input type="text" value= {{ post.promo }} id="CopyCode" style="text-transform: uppercase; text-align: center"/>
                     <br/><br/>
-                    <button onclick="copyText()"class="btn btn-info">Copy Promo!</button>
+                    <button onclick="copyText()"class="btn btn-info">Copy Promo!</button><br/>
                 {% endif %}
+                <p style="color: aliceblue"><strong>Popularity</strong></p>
+                <img src="{% static 'images/star.gif' %}" alt="star">
+                <p class="text" style="width: 20%">{{ post.visits }}</p>
                 </div>
             {% else %}
                 <p style="color: aliceblue"><strong>You're lost wanderer, post not found :(</strong></p>
