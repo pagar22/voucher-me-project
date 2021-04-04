@@ -1,4 +1,4 @@
-#CHARLIE
+
 
 from django.urls import path
 from voucherMe import views
@@ -16,4 +16,5 @@ urlpatterns = [
     path('business/<slug:business_name_slug>/', views.show_business, name='show_business'),
     path('business/<slug:business_name_slug>/add_post/', views.add_post, name='add_post'),
     path('business/<slug:business_name_slug>/<int:post_id>/', views.show_post, name='show_post'),
+    path('like_business/', views.like_business, name='like_business'),
 ]

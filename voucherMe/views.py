@@ -146,14 +146,22 @@ def show_post(request, business_name_slug, post_id):
         context_dict['post'] = None
     return render(request, 'voucher/post.html', context=context_dict)
 
-def BusinessLike(request, pk):
-    post = get_object_or_404(Business, id=request.POST.get('add_like'))
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
-    else:
-        post.likes.add(request.user)
+@login_required
+def like_business(request):
 
-    return redirect(reverse('voucher/business.html', args=[str(pk)]))
+    cat_id = None
+    if request.method == 'GET':
+        cat_id = request.GET['business']
+
+    likes = 0
+    if cat_id:
+        cat = cat.objects.get(id=int(cat_id))
+        if cat:
+            likes = cat.likes + 1
+            cat.likes =  likes
+            cat.save()
+
+    return HttpResponse(likes)
 
 # cookie handler
 def get_server_side_cookie(request, cookie, default_val=None):
