@@ -2,10 +2,6 @@
 {% load static %}
 
 {% block title_block %}Home!{% endblock %}
-
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/mystyle.css' %}" >
-
 {% block body_block %}
 
 	<div class="jumbotron p-1">
@@ -13,10 +9,8 @@
           <h3 class="jumbotron-heading" align="center">Welcome to VoucherMe</h3>
       </div>
     </div>
-
-    <div class="float-container">
-
-    	<div class="float-child" style="width: 100%" align="center">
+<center>
+	<div class="left column">
                   {% if posts %}
                       <h3 align="center" style="color: aliceblue">Top Trending Posts</h3><br/>
                       {% for post in posts %}
@@ -34,8 +28,11 @@
                   {% else %}
                       <p style="color: aliceblue; font-weight: bold">There are no posts on VoucherMe currently :(</p>
                   {% endif %}
-        </div>
-        <div class="float-child" style="width: 100%" align="center">
+    </div>
+
+              <br>
+
+    <div class="right column">
               {% if businesses %}
                   <h3 align="center" style="color: aliceblue">Most Popular Businesses</h3><br/>
                   {% for business in businesses %}
@@ -60,7 +57,7 @@
               {% else %}
                   <p style="color: aliceblue; font-weight: bold">There are no businesses register on VoucherMe yet :(</p>
               {% endif %}
-        </div>
     </div>
+</center>
 
 {% endblock %}
