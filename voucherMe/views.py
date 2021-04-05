@@ -1,13 +1,14 @@
 # AARYAN
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
-from datetime import datetime
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import login
+
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
-from django.http import HttpResponse
+
 
 # pageviews
 def index(request):
@@ -186,4 +187,5 @@ def visitor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
 

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from voucherMe.models import Business, Post, UserProfile
+from django.contrib.auth.forms import UserCreationForm
 
 TAGS_CATEGORY = (
     ("1", "FOOD"),
@@ -34,7 +35,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password',)
 
 
-class UserProfileForm(forms.ModelForm):
+class UserProfileForm(UserCreationForm):
     class Meta:
         model = UserProfile
         fields = ('picture',)
