@@ -150,8 +150,6 @@ def show_business(request, business_name_slug):
     return render(request, 'voucher/business.html', context=context_dict)
 
 
-
-
 def show_post(request, business_name_slug, post_id):
     context_dict = {}
     try:
