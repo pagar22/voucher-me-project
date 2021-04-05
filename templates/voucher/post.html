@@ -20,11 +20,11 @@
                     </div>
                 </div>
                 <div align="center">
-                <p style="color: aliceblue"><strong>Description</strong></p>
-                <p class="text">
-                {{ post.description }}<br/>
-                </p>
+                    <p style="color: aliceblue"><strong>Description</strong></p>
+                    <p class="text"> {{ post.description }}</p><br/>
+                    <p style="color: aliceblue"><strong>Category</strong></p>
                     <p class="text">{{ post.get_tags_category_display }}</p><br/>
+                    <p style="color: aliceblue"><strong>Type</strong></p>
                     <p class="text">{{ post.get_tags_type_display }}</p><br/>
                 {% if post.promo %}
                     <p style="color: aliceblue"><strong>Promo Code</strong></p>
@@ -36,6 +36,5 @@
             {% else %}
                 <p style="color: aliceblue"><strong>You're lost wanderer, post not found :(</strong></p>
             {% endif %}
-        
         <br><br>
     {% endblock %}

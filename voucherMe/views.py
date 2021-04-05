@@ -116,6 +116,7 @@ def all_posts(request):
 
 def show_business(request, business_name_slug):
     context_dict = {}
+    posts = []
     try:
         business = Business.objects.get(slug=business_name_slug)
         posts = Post.objects.filter(business_id=business).order_by('-visits')
@@ -130,17 +131,19 @@ def show_business(request, business_name_slug):
 
     total_visits = 0
     popularity = 0
-    for post in posts:
-        total_visits = total_visits+post.visits
-    if total_visits >= 0 and total_visits <= 10:
+    if posts:
+        for post in posts:
+            total_visits = total_visits+post.visits
+
+    if 0 <= total_visits <= 10:
         popularity = 1
-    elif total_visits > 10 and total_visits <= 20:
+    elif 10 < total_visits <= 20:
         popularity = 2
-    if total_visits > 20 and total_visits <= 40:
+    elif 20 < total_visits <= 40:
         popularity = 3
-    if total_visits > 40 and total_visits <= 70:
+    elif 40 < total_visits <= 70:
         popularity = 4
-    if total_visits > 70:
+    elif total_visits > 70:
         popularity = 5
 
     context_dict['popularity'] = popularity
@@ -161,7 +164,7 @@ def show_post(request, business_name_slug, post_id):
         context_dict['post'] = None
 
     visitor_cookie_handler(request)
-    post.visits = request.session['visits']
+    post.visits = post.visits+request.session['visits']
     post.save()
     return render(request, 'voucher/post.html', context=context_dict)
 

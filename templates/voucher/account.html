@@ -1,16 +1,15 @@
 {% extends "voucher/base.html" %}
 {% load static %}
-    {% block title_block %}
-        {% if user.is_authenticated %}
-            Authenticated
-        {% else %}
-            Unauthenticated
-		{% endif %}
-    {% endblock %}
+{% block title_block %}
+    {% if user.is_authenticated %}
+        Authenticated
+    {% else %}
+        Unauthenticated
+    {% endif %}
+{% endblock %}
 
 {% block body_block %}
    <script src="{% static 'js/functions.js' %}"></script>
-    
 
 {% if user.is_authenticated %}
     <div class="jumbotron p-1">
@@ -20,56 +19,56 @@
     </div>
 
     <div class="float-container">
-    <div class="float-child"style="width: 28%">
-    {% if userprofile.picture %}
-        <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 80%">
-    {% else %}
-        <img id="round" src="{% static 'images/profile.png' %}" alt="profile_picture" style="width: 200px">
-    {% endif %}
-    <br>
-    <br>
+
+        <div class="float-child"style="width: 28%">
+            {% if userprofile.picture %}
+                <img id="round" src="{{ userprofile.picture.url }}" alt="profile_picture" style="width: 80%">
+            {% else %}
+                <img id="round" src="{% static 'images/profile.png' %}" alt="profile_picture" style="width: 200px">
+            {% endif %}
+            <br><br>
+        </div>
+
+        <div class="float-child" style="width: 37%" align="center">
+            {% if businesses %}
+                <h4 style="color: aliceblue">Here are the businesses you own!</h4><br/>
+                {% for business in businesses %}
+                    <div class="card" style="width: 100%;">
+                        {% if business.image %}
+                            <center/>
+                            <div class="bus-image">
+                                <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
+                            </div>
+                        {% else %}
+                            <center/>
+                            <div class="bus-image">
+                                <img src="{% static 'images/img_2.png' %}">
+                            </div>
+                        {% endif %}
+                        <div class = "container">
+                            <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+            {% else %}
+                <h4 style="color: aliceblue">You don't own any businesses yet!</h4><br/>
+                <h4 style="color: aliceblue"><a href="{% url 'voucherMe:add_business' user.username %}">Add one now</a></h4>
+            {% endif %}
+        </div><br/>
+
+        <div class="float-child" align="right">
+            <a href="{% url 'voucherMe:add_business' user.username %}">
+                <button class="btn btn-primary">Add another business!</button>
+            </a>
+            <br/><br/>
+            <a href="{% url 'auth_logout' %}">
+                <button onclick="alertFunction()" class="btn btn-danger">Logout</button>
+            </a>
+        </div>
+    </div>
 {% else %}
-    This account is not registered :( Retry!
+    This account is not registered :( Sorry!
     <a href="{% url 'VoucherMe:index' %}">Back to Homepage</a></li>
 {% endif %}
-    <br><br>
-    </div>
-
-<div class="float-child" style="width: 37%" align="center">
-    {% if businesses %}
-        <h4 style="color: aliceblue">Here are the businesses you own!</h4><br/>
-        {% for business in businesses %}
-            <div class="card" style="width: 100%;">
-                {% if business.image %}
-                    <center/>
-                    <div class="bus-image">
-                        <img src="{{ business.image.url}}" alt="Businesses chosen image"/>
-                    </div>
-                {% else %}
-                    <center/>
-                    <div class="bus-image">
-                        <img src="{% static 'images/img_2.png' %}">
-                    </div>
-                {% endif %}
-                <div class = "container">
-                    <a href="{% url 'voucherMe:show_business' business.slug %}">{{ business.name }}</a>
-                </div>
-            </div>
-            <br>
-        {% endfor %}
-    {% else %}
-        <h4 style="color: aliceblue">You don't own any businesses yet!</h4><br/>
-        <h4 style="color: aliceblue">Add one now</h4>
-    {% endif %}
-</div><br/>
-
-<div class="float-child" align="right">
-    <a href="{% url 'voucherMe:add_business' user.username %}">
-        <button class="btn btn-primary">Add another business!</button>
-    </a><br/><br/>
-    <a href="{% url 'auth_logout' %}">
-        <button onclick="alertFunction()" class="btn btn-danger">Logout</button>
-    </a>
-    </div>
-</div>
 {% endblock %}

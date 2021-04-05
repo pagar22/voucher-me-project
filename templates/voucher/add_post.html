@@ -4,20 +4,52 @@
  {% endblock %}
 {% block body_block %}
     {% ifequal user business.user %}
+    <div class="jumbotron p-1">
     <h3 align="center">Add a new Post for {{ business.name }}</h3>
+    </div>
     <div class="container">
         <div class="row">
             <form role="form" method="post" action="{% url 'voucherMe:add_post' business.slug %}" enctype= multipart/form-data>
                 {% csrf_token %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                {% for field in form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text }} <br/>
-                    {{ field }} <br/>
-                    <div class="p-2"></div>
-                {% endfor %}
+                <div class="form-group">
+                    <label for="id_name" class="sr-only">Name</label>
+                    <input type="text" name="name" id="id_name" class="form-control"
+                           placeholder="Add a name for you post" required autocapitalize="words" style="margin-bottom: 6px; width: 130%"><br/>
+                    <label for="id_description" class="sr-only">Description</label>
+                    <textarea class="form-control" rows="6" name="description" id="id_description"
+                              placeholder="Describe your post" autocapitalize="sentences" style="width: 130%"></textarea><br/>
+                    <label for="id_promo" class="sr-only">Promo</label>
+                    <input type="text" name="promo" id="id_promo" class="form-control"
+                           placeholder="Add a promo code (optional)" autocapitalize="characters" style="margin-bottom: 6px; width: 110%"><br/>
+                    <label for="id_tags_category" class="sr-only">Tags Category</label>
+                    <input type="text" class="form-control" readonly id="id_tags_category" placeholder="Add a Category Tag">
+                    <select class="form-control" name="tags_category" id="id_tags_category">
+                        <option value="1">FOOD</option>
+                        <option value="2">TRAVEL</option>
+                        <option value="3">FASHION</option>
+                        <option value="4">TECHNOLOGY</option>
+                        <option value="5">BOOKS/EDUCATION</option>
+                        <option value="6">MUSIC</option>
+                        <option value="7">FURNITURE</option>
+                        <option value="8">STATIONARY & ART</option>
+                        <option value="9">SKINCARE & BEAUTY</option>
+                    </select><br/>
+                    <label for="id_tags_type" class="sr-only">Tags Type</label>
+                    <input type="text" class="form-control" readonly id="id_tags_type" placeholder="Add a Type Tag">
+                    <select class="form-control" name="tags_type" id="id_tags_type">
+                        <option value="1">FLASH SALE/DISCOUNT</option>
+                        <option value="2">BUY MORE, SAVE MORE</option>
+                        <option value="3">LOTTERY/COMPETITION</option>
+                        <option value="4">GIFT BUNDLE/GIVEAWAY</option>
+                        <option value="5">BUY 1 GET 1 FREE</option>
+                        <option value="6">LOYALTY PROGRAM</option>
+                        <option value="7">VOUCHER/COUPON</option>
+                        <option value="8">FREE SHIPPING/RETURN</option>
+                        <option value="9">OTER</option>
+                    </select>
+
+                </div>
+
                 <button class="btn btn-primary" type="submit" name="submit">
                     Post!
                 </button>
