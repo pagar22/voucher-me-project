@@ -1,11 +1,11 @@
-# AARYAN
+
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from datetime import datetime
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import login
+
 from voucherMe.forms import BusinessForm, PostForm
 from voucherMe.models import UserProfile, Business, Post
 
@@ -119,6 +119,7 @@ def all_posts(request):
 
 def show_business(request, business_name_slug):
     context_dict = {}
+    posts = []
     try:
         business = Business.objects.get(slug=business_name_slug)
         posts = Post.objects.filter(business_id=business).order_by('-visits')
@@ -130,6 +131,25 @@ def show_business(request, business_name_slug):
         context_dict['business'] = None
         context_dict['posts'] = None
         context_dict['user'] = None
+
+    total_visits = 0
+    popularity = 0
+    if posts:
+        for post in posts:
+            total_visits = total_visits + post.visits
+
+    if 0 <= total_visits <= 10:
+        popularity = 1
+    elif 10 < total_visits <= 20:
+        popularity = 2
+    elif 20 < total_visits <= 40:
+        popularity = 3
+    elif 40 < total_visits <= 70:
+        popularity = 4
+    elif total_visits > 70:
+        popularity = 5
+
+    context_dict['popularity'] = popularity
     return render(request, 'voucher/business.html', context=context_dict)
 
 
@@ -138,26 +158,16 @@ def show_post(request, business_name_slug, post_id):
     try:
         business = Business.objects.get(slug=business_name_slug)
         post = Post.objects.get(id=post_id)
-        vistor_cookie_handler(request)
-        post.visits = request.session['visits']
         context_dict['business'] = business
         context_dict['post'] = post
-        context_dict['visits'] = post.visits
-        context_dict['promo'] = post.promo
     except Post.DoesNotExist:
         context_dict['business'] = None
         context_dict['post'] = None
+
+    visitor_cookie_handler(request)
+    post.visits = post.visits + request.session['visits']
+    post.save()
     return render(request, 'voucher/post.html', context=context_dict)
-
-
-def BusinessLike(request, pk):
-    post = get_object_or_404(Business, id=request.POST.get('add_like'))
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
-    else:
-        post.likes.add(request.user)
-
-    return redirect(reverse('voucher/business.html', args=[str(pk)]))
 
 
 # cookie handler
@@ -168,7 +178,7 @@ def get_server_side_cookie(request, cookie, default_val=None):
     return val
 
 
-def vistor_cookie_handler(request):
+def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', 1))
     last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
     last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
@@ -180,6 +190,7 @@ def vistor_cookie_handler(request):
     request.session['visits'] = visits
 
 
+#charlie's view
 def add_data(request):
     user_obj = User.objects.all().last()
     k = user_obj.id

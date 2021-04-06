@@ -1,4 +1,3 @@
-#CHARLIE
 
 from django.urls import path
 from voucherMe import views

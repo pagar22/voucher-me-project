@@ -1,4 +1,3 @@
-# CHARLIE
 
 from django.contrib import admin
 from voucherMe.models import UserProfile, Business, Post
